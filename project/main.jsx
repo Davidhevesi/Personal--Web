@@ -8,6 +8,7 @@ function HevesiOS() {
   const [selectedIcon, setSelectedIcon] = useState(null);
   const [startOpen, setStartOpen] = useState(false);
   const [time, setTime] = useState("");
+  const [activeFilter, setActiveFilter] = useState("all");
   const zCounter = useRef(10);
   const winCounter = useRef(0);
 
@@ -54,10 +55,11 @@ function HevesiOS() {
       const id = `w${winCounter.current}`;
       const w = app.w || 600;
       const h = app.h || 480;
-      const margin = 60;
-      const maxX = Math.max(margin, window.innerWidth - w - margin);
+      const leftMargin = 284; // clear the sidebar
+      const rightMargin = 40;
+      const maxX = Math.max(leftMargin, window.innerWidth - w - rightMargin);
       const maxY = Math.max(60, window.innerHeight - h - 80);
-      const x = opts.x != null ? opts.x : Math.round(margin + Math.random() * Math.max(40, maxX - margin));
+      const x = opts.x != null ? opts.x : Math.round(leftMargin + Math.random() * Math.max(40, maxX - leftMargin));
       const y = opts.y != null ? opts.y : Math.round(60 + Math.random() * Math.max(20, maxY - 80));
       const newWin = {
         id, appId,
@@ -115,15 +117,14 @@ function HevesiOS() {
       openApp(id, { x: cx, y: cy });
     };
 
-    // CURATED — one primary project + one small utility overlapping.
-    // Outreach is the main hero, README sits as a small calling card.
-    place("outreach",   Math.max(380, Math.floor((W - 780) / 2) + 80), 80);
-    setTimeout(() => place("readme",     56, 80), 140);
+    const SB = 280; // sidebar width + gap
+    // CURATED — readme only as the welcome window
+    place("readme", Math.max(SB, Math.floor((W - APPS.readme.w) / 2) + 80), Math.max(60, Math.floor((H - APPS.readme.h) / 2) - 20));
 
     if (density === "loaded") {
-      // Loaded — add saturation + creative tester + signals
-      setTimeout(() => place("saturation", 100, Math.max(380, H - 580)), 280);
-      setTimeout(() => place("signals",    Math.max(560, W - 720), Math.max(380, H - 580)), 420);
+      setTimeout(() => place("outreach", Math.max(SB, Math.floor((W - 780) / 2) + 80), 60), 140);
+      setTimeout(() => place("saturation", SB, Math.max(380, H - 580)), 280);
+      setTimeout(() => place("signals", Math.max(SB + 300, W - 720), Math.max(380, H - 580)), 420);
     }
   }, [openApp]);
 
@@ -142,19 +143,110 @@ function HevesiOS() {
   };
 
   const desktopIcons = [
-    { id: "outreach",    label: "Outreach.exe",          glyph: "outreach" },
-    { id: "saturation",  label: "Saturation.exe",        glyph: "saturation" },
-    { id: "social",      label: "SocialSkills.exe",      glyph: "social" },
-    { id: "promptlab",   label: "PromptLab.exe",         glyph: "promptlab" },
-    { id: "creative",    label: "CreativeTest.exe",      glyph: "creative" },
-    { id: "workflowos",  label: "WorkflowOS.exe",        glyph: "workflowos" },
-    { id: "skills",      label: "Skills.exe",            glyph: "skills" },
-    { id: "readme",      label: "README.txt",            glyph: "readme" },
-    { id: "experiments", label: "Experiments",           glyph: "folder" },
-    { id: "research",    label: "Research",              glyph: "folder" },
-    { id: "systems",     label: "Systems",               glyph: "folder" },
-    { id: "signals",    label: "Signals.exe",            glyph: "signals" },
-    { id: "kinetic",    label: "KineticCommute.exe",     glyph: "kinetic" },
+    {
+      id: "kinetic", glyph: "kinetic",
+      filename: "KineticCommute.exe",
+      title: "Kinetic Commute",
+      category: "case-study", categoryLabel: "Case Study",
+      desc: "A commercial lifestyle campaign concept showing cinematic activewear photography and video direction.",
+      github: null,
+    },
+    {
+      id: "outreach", glyph: "outreach",
+      filename: "Outreach.exe",
+      title: "Hotel Outreach System",
+      category: "case-study", categoryLabel: "Case Study",
+      desc: "AI-assisted outbound system for finding boutique hotels, researching contacts, drafting personalized emails, and tracking replies.",
+      github: null,
+    },
+    {
+      id: "saturation", glyph: "saturation",
+      filename: "Saturation.exe",
+      title: "Market Saturation Analyzer",
+      category: "system", categoryLabel: "System",
+      desc: "Tool for identifying overused content patterns, positioning gaps, and stronger creative angles.",
+      github: "https://github.com/Davidhevesi/Market-Saturation-analizer",
+    },
+    {
+      id: "social", glyph: "social",
+      filename: "SocialSkills.exe",
+      title: "Social Media Skills",
+      category: "ai-skills", categoryLabel: "AI Skills",
+      desc: "Reusable prompt workflows for researching, planning, and creating social media content.",
+      github: "https://github.com/Davidhevesi/Social-Media-Skills",
+    },
+    {
+      id: "promptlab", glyph: "promptlab",
+      filename: "PromptLab.exe",
+      title: "Prompt Systems Lab",
+      category: "research", categoryLabel: "Experiments",
+      desc: "A workspace for testing prompt structures, Claude skills, and reusable AI workflows.",
+      github: null,
+    },
+    {
+      id: "creative", glyph: "creative",
+      filename: "CreativeTest.exe",
+      title: "Creative Testing System",
+      category: "system", categoryLabel: "Marketing System",
+      desc: "Framework for testing hooks, angles, and creative variations across paid and organic content.",
+      github: null,
+    },
+    {
+      id: "workflowos", glyph: "workflowos",
+      filename: "WorkflowOS.exe",
+      title: "Workflow Operating System",
+      category: "system", categoryLabel: "System",
+      desc: "A command-center view of AI workflows, automations, tasks, and marketing operations.",
+      github: null,
+    },
+    {
+      id: "skills", glyph: "skills",
+      filename: "Skills.exe",
+      title: "Marketing Skills Library",
+      category: "ai-skills", categoryLabel: "AI Skills",
+      desc: "Claude skills, marketing prompts, and repeatable workflow templates.",
+      github: "https://github.com/Davidhevesi/marketing-skills-repo",
+    },
+    {
+      id: "signals", glyph: "signals",
+      filename: "Signals.exe",
+      title: "Algorithm Signals",
+      category: "research", categoryLabel: "Research",
+      desc: "Research hub for tracking Google, Instagram, TikTok, and content discovery changes.",
+      github: null,
+    },
+    {
+      id: "readme", glyph: "readme",
+      filename: "README.txt",
+      title: "About & Contact",
+      category: "system", categoryLabel: "Info",
+      desc: "Background, current focus areas, and contact details for David Hevesi.",
+      github: null,
+    },
+    {
+      id: "experiments", glyph: "folder",
+      filename: "Experiments\\",
+      title: "Experiments",
+      category: "research", categoryLabel: "Research",
+      desc: "Archive of live and completed experiments across content, automation, and campaign testing.",
+      github: null,
+    },
+    {
+      id: "research", glyph: "folder",
+      filename: "Research\\",
+      title: "Research",
+      category: "research", categoryLabel: "Research",
+      desc: "Notes and market research on content saturation, positioning, and creative strategy.",
+      github: null,
+    },
+    {
+      id: "systems", glyph: "folder",
+      filename: "Systems\\",
+      title: "Systems",
+      category: "system", categoryLabel: "System",
+      desc: "Architecture documents and operational notes for live AI systems and workflow pipelines.",
+      github: null,
+    },
   ];
 
   // For taskbar
@@ -176,17 +268,28 @@ function HevesiOS() {
 
       <div className="desktop" onClick={onDesktopClick}>
         <div className="desktop-icons">
-          {desktopIcons.map(ic => (
-            <DesktopIcon
-              key={ic.id}
-              appId={ic.id}
-              label={ic.label}
-              glyph={<IconGlyph kind={ic.glyph} />}
-              selected={selectedIcon === ic.id}
-              onSelect={setSelectedIcon}
-              onOpen={openApp}
-            />
-          ))}
+          <StartHerePanel activeFilter={activeFilter} onFilter={setActiveFilter} />
+          <div className="icon-list">
+            {desktopIcons
+              .filter(ic => activeFilter === "all" || ic.category === activeFilter)
+              .map(ic => (
+                <DesktopIcon
+                  key={ic.id}
+                  appId={ic.id}
+                  filename={ic.filename}
+                  title={ic.title}
+                  category={ic.category}
+                  categoryLabel={ic.categoryLabel}
+                  desc={ic.desc}
+                  github={ic.github}
+                  glyph={<IconGlyph kind={ic.glyph} />}
+                  selected={selectedIcon === ic.id}
+                  onSelect={setSelectedIcon}
+                  onOpen={openApp}
+                />
+              ))
+            }
+          </div>
         </div>
 
         <AmbientPanel time={time} />

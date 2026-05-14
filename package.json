@@ -1,0 +1,8 @@
+{
+  "name": "hevesi-os",
+  "private": true,
+  "scripts": {
+    "dev":   "python3 -m http.server 8080 --directory project",
+    "start": "python3 -m http.server 8080 --directory project"
+  }
+}

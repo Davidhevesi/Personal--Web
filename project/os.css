@@ -173,52 +173,179 @@ body[data-motion="reduced"] * {
   transition-duration: 0ms !important;
 }
 
-/* ─── Desktop icons ───────────────────────────────────── */
+/* ─── Desktop sidebar (icon list + start here) ────────── */
 .desktop-icons {
   position: absolute;
-  top: 24px;
-  left: 24px;
-  display: grid;
-  grid-template-columns: repeat(2, 92px);
-  gap: 8px 4px;
-  z-index: 1;
+  top: 0;
+  left: 0;
+  bottom: 40px; /* taskbar */
+  width: 268px;
+  background: var(--paper);
+  border-right: 1px solid var(--rule-strong);
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+  overflow: hidden;
 }
+
+/* ─── Start Here panel ────────────────────────────────── */
+.start-here {
+  flex-shrink: 0;
+  padding: 16px 16px 14px;
+  border-bottom: 2px solid var(--ink);
+  background: var(--paper);
+}
+.sh-head {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.sh-body {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin-bottom: 12px;
+  text-wrap: pretty;
+}
+.sh-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.sh-filter {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  background: transparent;
+  border: 1px solid var(--rule-strong);
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: background 140ms ease, color 140ms ease, border-color 140ms ease;
+}
+.sh-filter:hover { color: var(--ink); border-color: var(--ink); }
+.sh-filter.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+/* ─── Icon card list ──────────────────────────────────── */
+.icon-list {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ─── Individual icon card ────────────────────────────── */
 .icon {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 4px 6px;
-  border: 1px solid transparent;
-  text-align: center;
-  transition: opacity 0.15s ease;
+  padding: 12px 14px 11px;
+  border-bottom: 1px solid var(--rule);
+  cursor: pointer;
+  text-align: left;
+  background: transparent;
+  transition: background 120ms ease;
+  border-left: 2px solid transparent;
 }
-.icon:hover .icon-glyph { opacity: 1; }
+.icon:hover { background: rgba(28,26,20,0.03); }
+.icon.selected {
+  background: var(--accent-soft);
+  border-left-color: var(--accent);
+}
+
+.icon-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 7px;
+}
 .icon-glyph {
-  width: 48px; height: 48px;
+  width: 30px; height: 30px;
+  flex-shrink: 0;
   border: 1px solid var(--rule-strong);
-  background: var(--paper);
+  background: var(--bg);
   display: grid;
   place-items: center;
   color: var(--ink);
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.04em;
-  opacity: 0.92;
-  position: relative;
-  transition: opacity 200ms ease, border-color 200ms ease;
+  transition: border-color 140ms ease, background 140ms ease, color 140ms ease;
 }
 .icon-glyph svg { display: block; }
-.icon-label {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.04em;
-  color: var(--ink-soft);
-  text-transform: lowercase;
-  line-height: 1.25;
+.icon.selected .icon-glyph {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
 }
-.icon.selected .icon-glyph { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
-.icon.selected .icon-label { background: var(--ink); color: var(--paper); padding: 1px 4px; }
+.icon-meta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-top: 1px;
+}
+.icon-filename {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.icon-cat {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: 0.9;
+}
+
+.icon-title {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.2;
+  color: var(--ink);
+  margin-bottom: 5px;
+}
+.icon-desc {
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}
+.icon-link {
+  display: inline-block;
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  opacity: 0.9;
+}
+.icon-link:hover { opacity: 0.65; }
+
+/* Mobile — stack icons vertically, allow page scroll */
+@media (max-width: 700px) {
+  .desktop-icons {
+    position: relative;
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 2px solid var(--ink);
+  }
+  .icon-list {
+    overflow: visible;
+  }
+  .desktop { overflow-y: auto; }
+}
 
 /* Right-side ambient panel */
 .ambient-panel {
@@ -1118,9 +1245,7 @@ body[data-chrome="stacked"] .win {
 .case-hero-img {
   display: block;
   width: 100%;
-  height: 380px;
-  object-fit: cover;
-  object-position: center top;
+  height: auto;
 }
 .case-grid {
   display: grid;
@@ -1131,9 +1256,7 @@ body[data-chrome="stacked"] .win {
 .case-cell-img {
   display: block;
   width: 100%;
-  height: 248px;
-  object-fit: cover;
-  object-position: center top;
+  height: auto;
 }
 .case-cap {
   font-family: var(--font-mono);
@@ -1143,6 +1266,75 @@ body[data-chrome="stacked"] .win {
   color: var(--ink-mute);
   padding: 7px 0 8px;
   border-bottom: 1px solid var(--rule);
+}
+
+/* ─── Process notes (KineticCommute) ─────────────────── */
+.proc-note {
+  margin: 10px 0 26px;
+  padding: 14px 18px 14px 20px;
+  border-left: 2px solid var(--rule);
+}
+.proc-note-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 9px;
+}
+.proc-note-prompt {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--ink-soft);
+  line-height: 1.58;
+  margin: 0 0 11px;
+}
+.proc-note ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.proc-note li {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.03em;
+  color: var(--ink-mute);
+  line-height: 1.72;
+  padding-left: 18px;
+  position: relative;
+  margin-top: 3px;
+}
+.proc-note li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--rule-strong);
+}
+.proc-note.compact .proc-note-prompt { font-size: 13px; line-height: 1.5; }
+.proc-note.compact li { font-size: 10px; }
+
+/* Base Reference Lock */
+.ref-lock {
+  margin: 30px 0;
+  padding: 20px 24px;
+  border: 1px solid var(--rule);
+}
+.ref-lock-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+.ref-lock-body {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.9;
+  color: var(--ink-soft);
+  white-space: pre-wrap;
+  margin: 0;
 }
 
 /* Tweaks Panel custom touch */

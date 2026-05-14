@@ -44,17 +44,65 @@ function Boot({ onDone }) {
   );
 }
 
-/* ─── Desktop icon ───────────────────────────────────── */
-function DesktopIcon({ appId, label, glyph, selected, onSelect, onOpen }) {
+/* ─── Start Here panel ───────────────────────────────── */
+function StartHerePanel({ activeFilter, onFilter }) {
+  const filters = [
+    { key: "all",        label: "All" },
+    { key: "case-study", label: "Case Studies" },
+    { key: "system",     label: "Systems" },
+    { key: "ai-skills",  label: "AI Skills" },
+    { key: "research",   label: "Research" },
+  ];
+  return (
+    <div className="start-here" onClick={(e) => e.stopPropagation()}>
+      <div className="sh-head">— Start Here</div>
+      <p className="sh-body">
+        Marketing systems, AI workflows, creative experiments, and case studies
+        by David Hevesi. Double-click any file to open it.
+      </p>
+      <div className="sh-filters">
+        {filters.map(f => (
+          <button
+            key={f.key}
+            className={`sh-filter ${activeFilter === f.key ? "active" : ""}`}
+            onClick={() => onFilter(f.key)}
+          >
+            {f.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Desktop icon card ──────────────────────────────── */
+function DesktopIcon({ appId, filename, title, categoryLabel, desc, github, glyph, selected, onSelect, onOpen }) {
   return (
     <div
       className={`icon ${selected ? "selected" : ""}`}
-      onClick={(e) => { e.stopPropagation(); onSelect(appId); }}
-      onDoubleClick={(e) => { e.stopPropagation(); onOpen(appId); }}
+      onClick={(e) => { e.stopPropagation(); onSelect(appId); onOpen(appId); }}
       role="button"
     >
-      <div className="icon-glyph">{glyph}</div>
-      <div className="icon-label">{label}</div>
+      <div className="icon-top">
+        <div className="icon-glyph">{glyph}</div>
+        <div className="icon-meta">
+          <div className="icon-filename">{filename}</div>
+          <div className="icon-cat">{categoryLabel}</div>
+        </div>
+      </div>
+      <div className="icon-title">{title}</div>
+      <div className="icon-desc">{desc}</div>
+      {github && (
+        <a
+          href={github}
+          className="icon-link"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => e.stopPropagation()}
+        >
+          View on GitHub →
+        </a>
+      )}
     </div>
   );
 }
@@ -348,4 +396,4 @@ function AmbientPanel({ time }) {
   );
 }
 
-Object.assign(window, { Boot, DesktopIcon, IconGlyph, Win, Taskbar, StartMenu, AmbientPanel });
+Object.assign(window, { Boot, StartHerePanel, DesktopIcon, IconGlyph, Win, Taskbar, StartMenu, AmbientPanel });

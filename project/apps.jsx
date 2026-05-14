@@ -25,7 +25,7 @@ function ReadmeApp() {
         <div style={{flex: 1, paddingTop: 4}}>
           <h2 style={{fontSize: 30, marginBottom: 6}}>David Hevesi</h2>
           <div className="t-label" style={{fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.2em", color: "var(--ink-mute)", textTransform: "uppercase"}}>
-            CREATIVE TECHNOLOGIST · MARKETING SYSTEMS · LONDON / REMOTE
+            CREATIVE TECHNOLOGIST · MARKETING SYSTEMS · ATLANTA / REMOTE
           </div>
         </div>
       </div>
@@ -53,10 +53,8 @@ function ReadmeApp() {
         <span className="st-r">RESPONSE &lt; 24H</span>
       </div>
       <ul className="link-list">
-        <li><span className="ll-k">EMAIL</span><a href="mailto:david@hevesi.studio" className="ll-v">david@hevesi.studio →</a></li>
-        <li><span className="ll-k">LINKEDIN</span><a href="#" className="ll-v">/in/davidhevesi →</a></li>
-        <li><span className="ll-k">CALENDAR</span><a href="#" className="ll-v">cal.com/hevesi →</a></li>
-        <li><span className="ll-k">CV</span><a href="#" className="ll-v">hevesi-cv.pdf →</a></li>
+        <li><span className="ll-k">EMAIL</span><a href="mailto:davidhevesi@protonmail.com" className="ll-v">davidhevesi@protonmail.com →</a></li>
+        <li><span className="ll-k">LINKEDIN</span><a href="https://www.linkedin.com/in/dhevesi/" target="_blank" className="ll-v">/in/dhevesi →</a></li>
       </ul>
 
       <p className="mono" style={{marginTop: 18, fontSize: 10, color: "var(--ink-mute)", letterSpacing: "0.16em", textTransform: "uppercase"}}>
@@ -80,12 +78,18 @@ function OutreachApp() {
         not a list.
       </p>
 
-      <div className="tags">
-        <span className="tag accent"><span className="tag-dot"/>LIVE DEPLOYMENT</span>
-        <span className="tag">PYTHON · GPT-4o · CLAUDE</span>
-        <span className="tag">APIFY · INSTANTLY</span>
-        <span className="tag">REPLY FEEDBACK LOOP</span>
+      <div className="section-title">
+        <span className="st-l">— STACK</span>
+        <span className="st-r">WORKFLOW · RESEARCH · OPERATIONS</span>
       </div>
+      <div className="tags" style={{marginBottom: 14}}>
+        <span className="tag accent"><span className="tag-dot"/>Claude</span>
+        <span className="tag"><span className="tag-dot"/>Vibe Prospecting</span>
+        <span className="tag"><span className="tag-dot"/>Notion</span>
+        <span className="tag"><span className="tag-dot"/>Gmail Drafts</span>
+        <span className="tag"><span className="tag-dot"/>Apify</span>
+      </div>
+      <p>Used for lead sourcing, hotel research, personalized outreach drafting, workflow organization, and campaign experimentation.</p>
 
       <div className="stat-row">
         <div>
@@ -136,20 +140,8 @@ function OutreachApp() {
         <li data-i="05">Cost ceiling: full pipeline runs at $0.038 per qualified send including LLM, scraping, and infra.</li>
       </ul>
 
-      <div className="section-title">
-        <span className="st-l">— STACK</span>
-        <span className="st-r">SHIPPED · DOCUMENTED</span>
-      </div>
-      <p className="mono">
-        python · fastapi · postgres · apify · openai gpt-4o · anthropic claude
-        sonnet · instantly · slack · linear · notion. infra on render +
-        cloudflare. operator dashboard in next.js.
-      </p>
-
-      <div style={{display: "flex", gap: 10, marginTop: 22, flexWrap: "wrap"}}>
-        <button className="btn-action primary">OPEN FULL CASE STUDY</button>
-        <button className="btn-action">VIEW PROMPT CHAIN</button>
-        <button className="btn-action">DOWNLOAD PDF</button>
+      <div style={{marginTop: 22}}>
+        <a href="https://www.youtube.com/watch?v=xPRY1Tt_8Ek" target="_blank" className="btn-action primary">WATCH VIDEO →</a>
       </div>
     </div>
   );
@@ -159,49 +151,94 @@ function OutreachApp() {
 function SaturationApp() {
   return (
     <div className="app-content">
-      <div className="app-eyebrow">CASE.002 · INTERNAL TOOLING · LIVE</div>
-      <h2>Content Saturation Analysis</h2>
+      <div className="app-eyebrow">SYSTEM · CONTENT STRATEGY · LIVE</div>
+      <h2>The Content Saturation System</h2>
       <p className="lede">
-        Five chained prompts that scan a niche, name what everybody is already
-        saying, flip those angles into expert contrarian takes, find the gaps
-        no one is occupying — and only then translate the survivors into shoot-able
-        content briefs.
+        A simple workflow that analyzes what everyone in your niche is already
+        posting so you can create content that actually stands out.
       </p>
 
-      <div className="tags">
-        <span className="tag accent"><span className="tag-dot"/>INTERNAL · DAILY USE</span>
-        <span className="tag">PROMPT CHAIN</span>
-        <span className="tag">APIFY MCP</span>
-        <span className="tag">MANUS · CHATGPT</span>
-      </div>
-
-      <SaturationWorkflow />
+      <p>Instead of guessing what to post, this system helps you:</p>
+      <ul className="checklist">
+        <li data-i="—">Identify overused content angles</li>
+        <li data-i="—">See what audiences are tired of</li>
+        <li data-i="—">Find gaps nobody is talking about</li>
+        <li data-i="—">Turn those insights into better content ideas</li>
+      </ul>
+      <p>Built for creators, brands, and marketers who want clearer positioning and stronger content strategy.</p>
 
       <div className="section-title">
-        <span className="st-l">— SAMPLE OUTPUT</span>
-        <span className="st-r">NICHE: BOUTIQUE HOTELS · IG</span>
+        <span className="st-l">— STEP 1</span>
+        <span className="st-r">AUDIT THE MARKET</span>
       </div>
-
-      <h3 style={{fontSize: 16, marginTop: 14}}>Top angles by saturation</h3>
-      <div style={{marginTop: 10}}>
-        <SatBar label="ROOM TOUR REELS" pct={92} sev="critical" />
-        <SatBar label="BREAKFAST AESTHETIC" pct={84} sev="critical" />
-        <SatBar label="FOUNDER STORY" pct={71} sev="high" />
-        <SatBar label="GUEST UGC RESHARE" pct={58} sev="high" />
-        <SatBar label="OPERATIONS POV" pct={22} sev="ok" />
-        <SatBar label="SOURCING / SUPPLIER" pct={11} sev="ok" />
-      </div>
-
-      <h3 style={{marginTop: 22}}>Recommended angles (SC-04 output)</h3>
+      <p>Analyze recent content in your niche to see:</p>
       <ul className="checklist">
-        <li data-i="01">Maintenance routines as identity — what gets fixed at 6am tells you what the brand actually values.</li>
-        <li data-i="02">The economics of a small property — honest revenue mix, occupancy reality, what a great month looks like.</li>
-        <li data-i="03">Sourcing portraits — the linen mill, the bread baker, the gardener. Geographic specificity over generic "local".</li>
+        <li data-i="—">Repeated hooks</li>
+        <li data-i="—">Common messaging</li>
+        <li data-i="—">Overused perspectives</li>
+        <li data-i="—">Saturated content angles</li>
       </ul>
+      <p>You get a clear map of what everyone is already saying.</p>
 
-      <p className="mono" style={{marginTop: 18}}>
-        // edge is not volume. edge is naming patterns clearly.
-      </p>
+      <div className="section-title">
+        <span className="st-l">— STEP 2</span>
+        <span className="st-r">IDENTIFY REPEATED PATTERNS</span>
+      </div>
+      <p>Break down the talking points creators repeat most often and understand why they became popular. This helps reveal why certain content now feels generic.</p>
+
+      <div className="section-title">
+        <span className="st-l">— STEP 3</span>
+        <span className="st-r">CREATE BETTER ANGLES</span>
+      </div>
+      <p>Rewrite saturated ideas into sharper, more grounded perspectives that feel more honest, specific, and expert-driven.</p>
+      <p>Not fake controversy. Not clickbait. Just stronger positioning.</p>
+
+      <div className="section-title">
+        <span className="st-l">— STEP 4</span>
+        <span className="st-r">FIND THE GAPS</span>
+      </div>
+      <p>Discover topics, perspectives, and emotional angles that almost nobody in your niche is covering. This is where differentiation happens.</p>
+
+      <div className="section-title">
+        <span className="st-l">— STEP 5</span>
+        <span className="st-r">TURN INSIGHTS INTO CONTENT</span>
+      </div>
+      <p>Convert the strongest ideas into:</p>
+      <ul className="checklist">
+        <li data-i="—">Hooks</li>
+        <li data-i="—">Reels</li>
+        <li data-i="—">Talking-head videos</li>
+        <li data-i="—">Carousel concepts</li>
+        <li data-i="—">Execution-ready post ideas</li>
+      </ul>
+      <p>Everything should feel native to modern social platforms.</p>
+
+      <div className="section-title">
+        <span className="st-l">— WHY THIS EXISTS</span>
+        <span className="st-r">CONTEXT</span>
+      </div>
+      <p>Most content is not bad. It is just interchangeable. The same hooks, the same messaging, and the same "insights" get repeated until audiences stop noticing them.</p>
+      <p>This system helps you see the landscape clearly so you can make intentional creative decisions instead of repeating what already exists.</p>
+
+      <div className="section-title">
+        <span className="st-l">— SETUP</span>
+        <span className="st-r">REQUIREMENTS</span>
+      </div>
+      <p>This workflow uses live social media data through:</p>
+      <ul className="checklist">
+        <li data-i="—">Manus Instagram Connector</li>
+        <li data-i="—">ChatGPT + Apify</li>
+        <li data-i="—">Instagram / TikTok / YouTube scraping workflows</li>
+      </ul>
+      <p>Install a connector first, then run the workflow in order from Step 1 to Step 5.</p>
+
+      <div className="pullquote">
+        The edge is not volume. The edge is naming patterns clearly.
+      </div>
+
+      <div style={{marginTop: 22}}>
+        <a href="https://marketsaturationanalyzer.netlify.app" target="_blank" className="btn-action primary">OPEN TOOL →</a>
+      </div>
     </div>
   );
 }
@@ -731,18 +768,116 @@ function SignalsApp() {
   );
 }
 
+/* ─── Process note block ───────────────────────────────── */
+function ProcNote({ prompt, notes, compact }) {
+  return (
+    <div className={"proc-note" + (compact ? " compact" : "")}>
+      <div className="proc-note-label">Process Notes · Prompt Direction</div>
+      <p className="proc-note-prompt">{prompt}</p>
+      <ul>
+        {notes.map((n, i) => <li key={i}>{n}</li>)}
+      </ul>
+    </div>
+  );
+}
+
 /* ─── KineticCommute case study ────────────────────────── */
 function KineticApp() {
   const imgs = [
-    { f: "CC4DAFBB-6F68-43EC-B291-846E62ACBC0A.webp", cap: "Urban Activewear Portrait" },
-    { f: "E0E33788-7A12-4CB8-A62F-EF9E518B96F1.webp",  cap: "Rooftop Structure" },
-    { f: "9E04C8C5-F5CD-405E-A765-749137AAB596.webp",  cap: "Jump Sequence" },
-    { f: "257C1E1D-8416-4EAD-A57E-46EC858FD130.webp",  cap: "Court Stretch" },
-    { f: "A20147DA-2A3D-42F1-BFE6-B5D0966F09E4.webp",  cap: "Low Angle Portrait" },
-    { f: "97CF5E4D-08B8-4B52-9AFA-261CC3C24ADE.webp",  cap: "Motion Frame" },
-    { f: "4C2939CA-4E25-41A3-9138-8F40B7906E49.webp",  cap: "Editorial Portrait" },
-    { f: "AA7DE374-5467-4A72-A1E8-7E8100045806.webp",  cap: "Shoe Detail" },
+    {
+      f: "CC4DAFBB-6F68-43EC-B291-846E62ACBC0A.webp",
+      cap: "Urban Activewear Portrait",
+      prompt: "Young woman in layered activewear — hoodie, high-waisted shorts, white low-top trainers — at a city crosswalk. Overcast natural daylight. Kodak Color 200 film grade. Street-level angle, shallow depth of field, pedestrian blur in background. Fabric in slight motion.",
+      notes: [
+        "Primary continuity anchor — skin tone, wardrobe palette, and light quality locked from this frame.",
+        "Crosswalk location referenced across later frames for environmental cohesion.",
+        "Film grain and grade set here; not renegotiated in subsequent iterations.",
+      ],
+    },
+    {
+      f: "E0E33788-7A12-4CB8-A62F-EF9E518B96F1.webp",
+      cap: "Rooftop Structure",
+      prompt: "Same subject, same wardrobe. Wide shot on a rooftop parking structure — concrete deck, steel railings, pale overcast sky. Figure relatively small in frame. City implied in background, out of focus. Transitional stance: not posing, about to move.",
+      notes: [
+        "Environmental anchor for the rooftop sequence; sky and concrete tones matched against frame 01.",
+        "Figure deliberately scaled back — building geometry and sky carry the composition.",
+        "Railing tested as geometric counterpoint to the organic shapes of activewear.",
+      ],
+    },
+    {
+      f: "9E04C8C5-F5CD-405E-A765-749137AAB596.webp",
+      cap: "Jump Sequence",
+      prompt: "Same subject, rooftop location. Camera low to concrete, shooting upward. Mid-jump — soft overcast sky as backdrop. Motion blur on lower legs and trainers; face and torso held sharp. No fill, natural light only.",
+      notes: [
+        "First motion-blur test; blur localised to feet and lower limbs, face and core held legible.",
+        "Upward angle preserves the visual grammar established in the portrait frames.",
+        "Jump height kept realistic — brief explicitly rejected acrobatic or staged athleticism.",
+      ],
+    },
+    {
+      f: "257C1E1D-8416-4EAD-A57E-46EC858FD130.webp",
+      cap: "Court Stretch",
+      prompt: "Same subject, consistent wardrobe. Seated forward fold on a painted basketball court — hands extended past feet. Low angle, eye-level with court surface. Painted court lines as foreground geometry. Even diffused daylight, no strong shadows.",
+      notes: [
+        "Location shift to painted concrete introduces a distinct texture without additional set dressing.",
+        "Pacing beat in the sequence — a deliberate rest frame after the rooftop action shots.",
+        "Court lines used as graphic foreground element; no props or additional styling required.",
+      ],
+    },
+    {
+      f: "A20147DA-2A3D-42F1-BFE6-B5D0966F09E4.webp",
+      cap: "Low Angle Portrait",
+      prompt: "Close portrait, camera at ground level, shooting upward. Subject standing, looking past camera. Pronounced perspective distortion — trainers large in foreground, face receding toward upper frame. Overcast sky backdrop. Hoodie relaxed, fabric loose.",
+      notes: [
+        "Most extreme angle in the set — perspective distortion used as deliberate creative tool, not corrected.",
+        "Overcast sky backdrop reinstated to match the exposure reference from frame 01.",
+        "Trainer detail held sharp; this frame directly informed the brief for the shoe-detail shot.",
+      ],
+    },
+    {
+      f: "97CF5E4D-08B8-4B52-9AFA-261CC3C24ADE.webp",
+      cap: "Motion Frame",
+      prompt: "Running mid-stride with directional pan blur. Subject arms pumping, fabric in motion. Urban environment, background streaked from camera movement. Natural light, warm-cool split at horizon. Face partially obscured by motion.",
+      notes: [
+        "Pan blur applied to background and limbs; face kept at minimum recognisable threshold.",
+        "First warm-cool grade split in the sequence — deliberate departure from the flat overcast of earlier frames.",
+        "Arm position and stride reviewed against activewear reference; gym-ad stylisation explicitly avoided.",
+      ],
+    },
+    {
+      f: "4C2939CA-4E25-41A3-9138-8F40B7906E49.webp",
+      cap: "Editorial Portrait",
+      prompt: "Outdoor editorial portrait. Subject seated on concrete steps, direct calm eye contact. Tight vertical crop. High fidelity — skin texture, fabric weave, natural hair. Available light only. Clean background, no styling.",
+      notes: [
+        "Character anchor after the action sequence — model identity re-established before the final product frame.",
+        "Highest skin and fabric fidelity in the set; skin tone sampled here for all consistency corrections.",
+        "Eyeline specified as direct but not confrontational — brief called for quiet confidence, not aggression.",
+      ],
+    },
+    {
+      f: "AA7DE374-5467-4A72-A1E8-7E8100045806.webp",
+      cap: "Shoe Detail",
+      prompt: "Macro-adjacent detail. White low-top trainer on a painted urban surface — court line or textured concrete. Foot at rest or mid-step. Shallow depth of field, surface texture sharp. Ankle fabric consistent with wardrobe from reference frame.",
+      notes: [
+        "Final product anchor — designed to work as a standalone social asset or paid ad crop.",
+        "Court-painted surface chosen to close the location loop opened in the court stretch frame.",
+        "Ankle wardrobe continuity confirmed against frame 01 before this shot was finalised.",
+      ],
+    },
   ];
+
+  const refLock = `CONTINUITY ANCHOR — established at iteration 01 and not revised.
+
+subject ···· young woman · athletic build · natural skin · relaxed posture
+wardrobe ··· muted navy hoodie · high-waisted shorts · white low-top trainers · no accessories
+light ······ overcast natural daylight · no artificial fill · no hard shadows
+grade ······ Kodak Color 200 simulation — warm skin · muted blue-grey wardrobe · light grain
+location ··· urban only — streets · rooftop structures · painted courts · no gyms · no studios
+tone ······· cinematic lifestyle · movement as daily life · not workout content · not performance
+
+carry all values into every subsequent frame.
+note explicit corrections in process notes below each image.`;
+
   return (
     <div className="app-content" style={{padding: "38px 40px 48px"}}>
       <div className="app-eyebrow">CASE.013 · SPEC CAMPAIGN · AI-ASSISTED CREATIVE DIRECTION · 2026</div>
@@ -762,13 +897,20 @@ function KineticApp() {
         <span className="tag"><span className="tag-dot"/>Photo / Video Direction</span>
       </div>
 
+      {/* Base Reference Lock */}
+      <div className="ref-lock">
+        <div className="ref-lock-label">Base Reference Lock · Continuity Anchor</div>
+        <div className="ref-lock-body">{refLock}</div>
+      </div>
+
       {/* Hero image */}
       <div className="case-hero">
         <img src={`Images/${imgs[0].f}`} alt={imgs[0].cap} className="case-hero-img"/>
         <div className="case-cap">{imgs[0].cap}</div>
       </div>
+      <ProcNote prompt={imgs[0].prompt} notes={imgs[0].notes} />
 
-      <div className="section-title" style={{marginTop: 36}}>
+      <div className="section-title" style={{marginTop: 8}}>
         <span className="st-l">— THE PROBLEM</span><span className="st-r">BRIEF</span>
       </div>
       <p>Most activewear campaigns feel repetitive: gym scenes, polished workout poses,
@@ -780,8 +922,9 @@ function KineticApp() {
         <img src={`Images/${imgs[1].f}`} alt={imgs[1].cap} className="case-hero-img"/>
         <div className="case-cap">{imgs[1].cap}</div>
       </div>
+      <ProcNote prompt={imgs[1].prompt} notes={imgs[1].notes} />
 
-      <div className="section-title" style={{marginTop: 36}}>
+      <div className="section-title" style={{marginTop: 8}}>
         <span className="st-l">— CREATIVE DIRECTION</span><span className="st-r">CONCEPT</span>
       </div>
       <p>The city becomes the environment for movement: rooftop parking structures,
@@ -795,6 +938,7 @@ function KineticApp() {
           <div key={i} className="case-cell">
             <img src={`Images/${img.f}`} alt={img.cap} className="case-cell-img"/>
             <div className="case-cap">{img.cap}</div>
+            <ProcNote prompt={img.prompt} notes={img.notes} compact />
           </div>
         ))}
       </div>
@@ -835,9 +979,21 @@ function KineticApp() {
           <div key={i} className="case-cell">
             <img src={`Images/${img.f}`} alt={img.cap} className="case-cell-img"/>
             <div className="case-cap">{img.cap}</div>
+            <ProcNote prompt={img.prompt} notes={img.notes} compact />
           </div>
         ))}
       </div>
+
+      {/* Consistency Corrections */}
+      <div className="section-title" style={{marginTop: 36}}>
+        <span className="st-l">— CONSISTENCY CORRECTIONS</span><span className="st-r">ITERATIVE REFINEMENT</span>
+      </div>
+      <p>Three recurring drift patterns were identified and corrected across the full generation run. These are not failures — they are the normal cost of working with AI image generation at this level of visual specificity. Each correction was written as a prompt addition, not a restart.</p>
+      <ul className="checklist">
+        <li data-i="01">Skin tone drift — Overcast frames pushed toward blue-shifted or desaturated skin. Corrected by referencing frame 07 and adding an explicit grade instruction to each subsequent motion prompt.</li>
+        <li data-i="02">Fabric silhouette — Hoodie and shorts defaulted to a fitted, gym-specific cut. Brief revised to specify "relaxed fit, not performance fit" after frame 02; applied to all iterations from that point forward.</li>
+        <li data-i="03">Environment creep — Early iterations introduced gym flooring or fitness studio surfaces. Brief reinforced with "urban only — streets, concrete, architectural surfaces" after frame 03. No studio frames made the final set.</li>
+      </ul>
 
       <div className="pullquote" style={{marginTop: 36}}>
         The city is not background. It's the workout.
@@ -880,6 +1036,14 @@ function KineticApp() {
         <li data-i="—">Product detail images</li>
         <li data-i="—">Social carousel assets</li>
       </ul>
+
+      <div className="section-title" style={{marginTop: 36}}>
+        <span className="st-l">— SOCIAL APPLICATION</span><span className="st-r">INSTAGRAM</span>
+      </div>
+      <div className="case-hero">
+        <img src="Images/Instagram.PNG" alt="Instagram mockup" className="case-hero-img"/>
+        <div className="case-cap">Instagram Mockup · Campaign Application</div>
+      </div>
 
       <p className="mono" style={{marginTop: 24, fontSize: 10, color: "var(--ink-mute)", letterSpacing: "0.16em", textTransform: "uppercase"}}>
         // spec concept · personal project · ai-assisted creative direction · 2026
