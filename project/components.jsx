@@ -320,21 +320,13 @@ function Taskbar({ windows, activeId, onActivate, onStart, startOpen, time, stat
 /* ─── Start menu ─────────────────────────────────────── */
 function StartMenu({ onOpen, onClose }) {
   const items = [
-    { id: "outreach",    label: "Outreach.exe" },
-    { id: "saturation",  label: "SaturationScan.exe" },
-    { id: "social",      label: "SocialSkills.exe" },
-    { id: "promptlab",   label: "PromptLab.exe" },
-    { id: "creative",    label: "CreativeTesting.exe" },
-    { id: "skills",      label: "Skills.exe" },
-    { id: "workflowos",  label: "WorkflowOS.exe" },
+    { id: "kinetic",    label: "KineticCommute.exe" },
+    { id: "outreach",   label: "Outreach.exe" },
+    { id: "saturation", label: "SaturationScan.exe" },
+    { id: "social",     label: "SocialSkills.exe" },
+    { id: "skills",     label: "Skills.exe" },
     null,
-    { id: "experiments", label: "Experiments\\" },
-    { id: "research",    label: "Research\\" },
-    { id: "systems",     label: "Systems\\" },
-    null,
-    { id: "readme",      label: "README.txt" },
-    { id: "signals",     label: "Signals.exe" },
-    { id: "kinetic",     label: "KineticCommute.exe" },
+    { id: "readme",     label: "README.txt" },
   ];
   return (
     <>
