@@ -734,14 +734,14 @@ function SignalsApp() {
 /* ─── KineticCommute case study ────────────────────────── */
 function KineticApp() {
   const imgs = [
-    { f: "CC4DAFBB-6F68-43EC-B291-846E62ACBC0A.PNG", cap: "Urban Activewear Portrait" },
-    { f: "E0E33788-7A12-4CB8-A62F-EF9E518B96F1.PNG",  cap: "Rooftop Structure" },
-    { f: "9E04C8C5-F5CD-405E-A765-749137AAB596.PNG",  cap: "Jump Sequence" },
-    { f: "257C1E1D-8416-4EAD-A57E-46EC858FD130.PNG",  cap: "Court Stretch" },
-    { f: "A20147DA-2A3D-42F1-BFE6-B5D0966F09E4.PNG",  cap: "Low Angle Portrait" },
-    { f: "97CF5E4D-08B8-4B52-9AFA-261CC3C24ADE.PNG",  cap: "Motion Frame" },
-    { f: "4C2939CA-4E25-41A3-9138-8F40B7906E49.PNG",  cap: "Editorial Portrait" },
-    { f: "AA7DE374-5467-4A72-A1E8-7E8100045806.PNG",  cap: "Shoe Detail" },
+    { f: "CC4DAFBB-6F68-43EC-B291-846E62ACBC0A.webp", cap: "Urban Activewear Portrait" },
+    { f: "E0E33788-7A12-4CB8-A62F-EF9E518B96F1.webp",  cap: "Rooftop Structure" },
+    { f: "9E04C8C5-F5CD-405E-A765-749137AAB596.webp",  cap: "Jump Sequence" },
+    { f: "257C1E1D-8416-4EAD-A57E-46EC858FD130.webp",  cap: "Court Stretch" },
+    { f: "A20147DA-2A3D-42F1-BFE6-B5D0966F09E4.webp",  cap: "Low Angle Portrait" },
+    { f: "97CF5E4D-08B8-4B52-9AFA-261CC3C24ADE.webp",  cap: "Motion Frame" },
+    { f: "4C2939CA-4E25-41A3-9138-8F40B7906E49.webp",  cap: "Editorial Portrait" },
+    { f: "AA7DE374-5467-4A72-A1E8-7E8100045806.webp",  cap: "Shoe Detail" },
   ];
   return (
     <div className="app-content" style={{padding: "38px 40px 48px"}}>
