@@ -1,0 +1,343 @@
+/*
+  Studio Hevesi — Design System Foundations
+  colors_and_type.css
+  ─────────────────────────────────────────────
+  Import this file into any Studio Hevesi HTML artifact.
+  Three themes available: [data-theme="cream"] (default), [data-theme="bone"], [data-theme="midnight"]
+*/
+
+/* ─── Google Fonts ─────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Geist:wght@300;400;500&family=Geist+Mono:wght@300;400;500&display=swap');
+
+/* ─── THEME: Cream Editorial (default) ─────────────────── */
+:root,
+[data-theme="cream"] {
+  --bg:           #ece6db;   /* warm parchment — slightly deeper, more archival */
+  --paper:        #f5f0e6;   /* soft ivory — warm without being yellow */
+  --ink:          #1c1a14;
+  --ink-rgb:      28, 26, 20;
+  --ink-soft:     #302c25;
+  --ink-mute:     #554d42;
+  --accent:       #8c3c1e;
+  --accent-soft:  rgba(140, 60, 30, 0.09);
+  --gold:         #9a7840;   /* muted warm gold — less saturated amber */
+  --gold-soft:    rgba(154, 120, 64, 0.12);
+  --rule:         rgba(28, 26, 20, 0.12);
+  --rule-strong:  rgba(28, 26, 20, 0.24);
+  --scrim:        rgba(28, 26, 20, 0.55);
+
+  /* Severity palette */
+  --sev-critical: #8a3a1a;
+  --sev-high:     #7a5a1a;
+  --sev-medium:   #4a5a2a;
+  --sev-low:      #2a4a5a;
+  --sev-ok:       #3a5a3a;
+}
+
+/* ─── THEME: Bone & Moss ────────────────────────────────── */
+[data-theme="bone"] {
+  --bg:           #edeae2;
+  --paper:        #f8f5ee;
+  --ink:          #1e1c14;
+  --ink-rgb:      30, 28, 20;
+  --ink-soft:     #38322a;
+  --ink-mute:     #62594e;
+  --accent:       #2d3a2a;
+  --accent-soft:  rgba(45, 58, 42, 0.10);
+  --gold:         #8a7444;
+  --gold-soft:    rgba(138, 116, 68, 0.12);
+  --rule:         rgba(30, 28, 20, 0.11);
+  --rule-strong:  rgba(30, 28, 20, 0.22);
+  --scrim:        rgba(30, 28, 20, 0.55);
+}
+
+/* ─── THEME: Cinematic Midnight ─────────────────────────── */
+[data-theme="midnight"] {
+  --bg:           #0e0d0b;
+  --paper:        #15130f;
+  --ink:          #f3ece0;
+  --ink-rgb:      243, 236, 224;
+  --ink-soft:     #d5cdbf;
+  --ink-mute:     #8a8276;
+  --accent:       #c98a5a;
+  --accent-soft:  rgba(201, 138, 90, 0.15);
+  --gold:         #c9a86a;
+  --gold-soft:    rgba(201, 168, 106, 0.15);
+  --rule:         rgba(243, 236, 224, 0.16);
+  --rule-strong:  rgba(243, 236, 224, 0.32);
+  --scrim:        rgba(0, 0, 0, 0.65);
+}
+
+/* ─── TYPOGRAPHY — Font Families ───────────────────────── */
+:root {
+  --font-serif:   'Cormorant Garamond', 'Georgia', serif;
+  --font-sans:    'Geist', 'Helvetica Neue', sans-serif;
+  --font-mono:    'Geist Mono', 'Courier New', monospace;
+}
+
+/* ─── TYPOGRAPHY — Scale (fluid) ───────────────────────── */
+:root {
+  /* Display / Hero */
+  --text-display:    clamp(3rem, 6vw, 5.5rem);      /* ~48–88px */
+  --text-headline:   clamp(2rem, 3.5vw, 3.25rem);   /* ~32–52px */
+  --text-subhead:    clamp(1.375rem, 2vw, 1.875rem); /* ~22–30px */
+  --text-lede:       clamp(1.0625rem, 1.25vw, 1.25rem); /* ~17–20px */
+
+  /* Body */
+  --text-body:       clamp(0.9375rem, 1vw, 1.0625rem); /* ~15–17px */
+  --text-small:      clamp(0.8125rem, 0.875vw, 0.9375rem); /* ~13–15px */
+
+  /* Mono / Labels */
+  --text-label:      clamp(0.6875rem, 0.75vw, 0.75rem);  /* ~11–12px */
+  --text-eyebrow:    clamp(0.625rem, 0.7vw, 0.6875rem);  /* ~10–11px */
+
+  /* Numerals (set in serif) */
+  --text-numeral-xl: clamp(4.5rem, 9vw, 8rem);      /* ~72–128px */
+  --text-numeral-lg: clamp(2.5rem, 4.5vw, 4rem);    /* ~40–64px */
+}
+
+/* ─── TYPOGRAPHY — Semantic Roles ──────────────────────── */
+
+/* Display headline — always serif italic */
+.t-display,
+h1 {
+  font-family: var(--font-serif);
+  font-size: var(--text-display);
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+/* Section headline */
+.t-headline,
+h2 {
+  font-family: var(--font-serif);
+  font-size: var(--text-headline);
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+/* Sub-headline */
+.t-subhead,
+h3 {
+  font-family: var(--font-serif);
+  font-size: var(--text-subhead);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+/* Lede paragraph */
+.t-lede {
+  font-family: var(--font-serif);
+  font-size: var(--text-lede);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+/* Body copy */
+.t-body,
+p {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+/* Small text */
+.t-small {
+  font-family: var(--font-sans);
+  font-size: var(--text-small);
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--ink-mute);
+}
+
+/* Eyebrow / label — mono uppercase */
+.t-eyebrow,
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-eyebrow);
+  font-weight: 400;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  line-height: 1.4;
+}
+
+/* UI label */
+.t-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+/* Large numeral */
+.t-numeral {
+  font-family: var(--font-serif);
+  font-size: var(--text-numeral-lg);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.t-numeral-xl {
+  font-family: var(--font-serif);
+  font-size: var(--text-numeral-xl);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+
+/* ─── SPACING TOKENS ────────────────────────────────────── */
+:root {
+  --space-2:    2px;
+  --space-4:    4px;
+  --space-8:    8px;
+  --space-12:   12px;
+  --space-16:   16px;
+  --space-24:   24px;
+  --space-32:   32px;
+  --space-48:   48px;
+  --space-64:   64px;
+  --space-80:   80px;
+  --space-96:   96px;
+  --space-120:  120px;
+
+  /* Fluid gutters */
+  --gutter:     clamp(20px, 4vw, 64px);
+  --gutter-sm:  clamp(12px, 2vw, 32px);
+
+  /* Section padding */
+  --section-py: clamp(72px, 9vw, 140px);
+}
+
+/* ─── LAYOUT ────────────────────────────────────────────── */
+:root {
+  --max-w:       1320px;
+  --max-w-narrow: 980px;
+  --radius:      0px;  /* Hard corners throughout */
+}
+
+/* ─── BASE RESET ────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: 1.65;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: var(--space-32) 0;
+}
+
+a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+a:hover { opacity: 0.65; }
+
+/* ─── COMPONENT PRIMITIVES ──────────────────────────────── */
+
+/* Rule divider */
+.rule { border-top: 1px solid var(--rule); }
+
+/* Paper surface */
+.paper {
+  background-color: var(--paper);
+  border: 1px solid var(--rule);
+}
+
+/* Tag / pill */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: var(--text-eyebrow);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  border: 1px solid var(--rule-strong);
+  padding: 4px 10px;
+  line-height: 1.4;
+}
+
+.tag-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
+  flex-shrink: 0;
+}
+
+.tag[data-severity="critical"] { color: var(--sev-critical); border-color: currentColor; }
+.tag[data-severity="high"]     { color: var(--sev-high);     border-color: currentColor; }
+.tag[data-severity="medium"]   { color: var(--sev-medium);   border-color: currentColor; }
+.tag[data-severity="low"]      { color: var(--sev-low);      border-color: currentColor; }
+.tag[data-severity="ok"]       { color: var(--sev-ok);       border-color: currentColor; }
+
+/* Score meter */
+.score-meter {
+  width: 100%;
+  height: 2px;
+  background: var(--rule);
+  position: relative;
+}
+
+.score-meter-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: var(--ink);
+  transition: width 0.6s cubic-bezier(0.25, 0, 0.1, 1);
+}
+
+.score-meter-fill[data-critical] { background: var(--accent); }
+
+/* Fade-up reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
