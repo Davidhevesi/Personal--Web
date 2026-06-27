@@ -1,0 +1,128 @@
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  height: 56px;
+}
+
+.inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--px-desktop);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+}
+
+.link {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-mid);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.link:hover,
+.linkActive {
+  color: var(--accent);
+}
+
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: var(--text);
+}
+
+.dialog {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  border: none;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+}
+
+.dialog::backdrop {
+  background: transparent;
+}
+
+.dialogInner {
+  padding: 16px 16px 24px;
+}
+
+.dialogHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+
+.dialogClose {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text);
+  font-size: 24px;
+  line-height: 1;
+  padding: 4px;
+}
+
+.dialogLinks {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.dialogLink {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text);
+  text-decoration: none;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+@media (max-width: 640px) {
+  .inner {
+    padding: 0 var(--px-mobile);
+  }
+
+  .links {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}

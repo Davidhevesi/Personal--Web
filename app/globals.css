@@ -1,0 +1,124 @@
+:root {
+  --bg:            oklch(97.5% 0.007 78);
+  --bg-subtle:     oklch(93.5% 0.010 74);
+  --bg-inset:      oklch(90%   0.012 74);
+  --text:          oklch(17%  0.018 68);
+  --text-mid:      oklch(42%  0.018 68);
+  --text-muted:    oklch(60%  0.012 68);
+  --accent:        oklch(38%  0.082 192);
+  --accent-mid:    oklch(55%  0.055 192);
+  --accent-bg:     oklch(95%  0.025 192);
+  --warn:          oklch(58%  0.13  55);
+  --warn-bg:       oklch(96%  0.025 78);
+  --border:        oklch(86%  0.010 74);
+  --border-strong: oklch(75%  0.015 74);
+
+  --font-serif: var(--font-serif-var), 'Georgia', serif;
+  --font-sans:  var(--font-sans-var),  'Helvetica Neue', sans-serif;
+  --font-mono:  var(--font-mono-var),  'Courier New', monospace;
+
+  --max-w: 1160px;
+  --px-desktop: 48px;
+  --px-mobile: 16px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.72;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+
+/* ── Prose (article body) ── */
+.prose {
+  max-width: 680px;
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.72;
+  color: var(--text);
+  text-wrap: pretty;
+}
+
+.prose p { margin-bottom: 1em; }
+
+.prose h2 {
+  font-family: var(--font-serif);
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--text);
+  margin: 2em 0 0.75em;
+}
+
+.prose h3 {
+  font-family: var(--font-sans);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text);
+  margin: 1.5em 0 0.5em;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.5em;
+  margin-bottom: 1em;
+}
+
+.prose li { margin-bottom: 0.25em; }
+
+.prose strong { font-weight: 600; }
+
+.prose a {
+  color: var(--accent-mid);
+  text-decoration: underline;
+}
+
+.prose blockquote {
+  border-left: 3px solid var(--border-strong);
+  padding-left: 1em;
+  font-style: italic;
+  color: var(--text-mid);
+  margin: 1.5em 0;
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--bg-inset);
+  padding: 0.15em 0.35em;
+  border-radius: 2px;
+}
+
+.prose pre {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--bg-inset);
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 1.5em 0;
+  border-radius: 4px;
+}
+
+.prose pre code {
+  background: none;
+  padding: 0;
+  font-size: 1em;
+}

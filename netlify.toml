@@ -1,5 +1,19 @@
 [build]
-  publish = "project"
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "20"
+  # Public Sanity config (safe to commit — NEXT_PUBLIC_* and a public dataset).
+  # The read token is NOT here; set SANITY_API_READ_TOKEN in the Netlify UI only if
+  # you later enable draft mode. The public dataset needs no token to read.
+  NEXT_PUBLIC_SANITY_PROJECT_ID = "g22ypzt1"
+  NEXT_PUBLIC_SANITY_DATASET = "production"
+  NEXT_PUBLIC_SITE_URL = "https://hevesi.studio"
+
+# Official Next.js runtime — handles SSR/ISR, route handlers, and asset caching.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
 # ─── Security headers (all routes) ────────────────────────
 [[headers]]
@@ -9,27 +23,3 @@
     X-Content-Type-Options   = "nosniff"
     Referrer-Policy          = "strict-origin-when-cross-origin"
     Permissions-Policy       = "camera=(), microphone=(), geolocation=()"
-
-# ─── Images — immutable (UUID filenames = safe to cache forever) ──
-[[headers]]
-  for = "/Images/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-# ─── Stylesheets ──────────────────────────────────────────
-[[headers]]
-  for = "/*.css"
-  [headers.values]
-    Cache-Control = "public, max-age=604800"
-
-# ─── JSX source files ─────────────────────────────────────
-[[headers]]
-  for = "/*.jsx"
-  [headers.values]
-    Cache-Control = "public, max-age=3600"
-
-# ─── HTML — never cached so deploys are instant ───────────
-[[headers]]
-  for = "/index.html"
-  [headers.values]
-    Cache-Control = "no-cache, no-store, must-revalidate"

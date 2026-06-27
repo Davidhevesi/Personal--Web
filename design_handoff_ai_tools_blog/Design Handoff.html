@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design Handoff — AI Tools Blog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Tokens ── */
+    :root {
+      --bg:            oklch(97.5% 0.007 78);
+      --bg-subtle:     oklch(93.5% 0.010 74);
+      --bg-inset:      oklch(90%   0.012 74);
+      --text:          oklch(17%  0.018 68);
+      --text-mid:      oklch(42%  0.018 68);
+      --text-muted:    oklch(60%  0.012 68);
+      --accent:        oklch(38%  0.082 192);
+      --accent-bg:     oklch(95%  0.025 192);
+      --accent-mid:    oklch(55%  0.055 192);
+      --warn:          oklch(58%  0.13  55);
+      --warn-bg:       oklch(96%  0.025 78);
+      --border:        oklch(86%  0.010 74);
+      --border-strong: oklch(75%  0.015 74);
+      --serif:         'Lora', Georgia, serif;
+      --sans:          'IBM Plex Sans', system-ui, sans-serif;
+      --mono:          'IBM Plex Mono', 'Courier New', monospace;
+    }
+
+    /* ── Reset + Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    /* ── Doc shell (print-safe) ── */
+    .doc {
+      box-sizing: border-box;
+      max-width: 8.5in;
+      margin: 0 auto;
+      background: var(--bg);
+      padding: 64px clamp(24px, 6vw, 0.9in) 96px;
+    }
+    .doc-frame { width: 100%; border-collapse: collapse; }
+    .doc-frame td { padding: 0; }
+    .hdr-space, .ftr-space { display: none; }
+    h1, h2, h3, h4, h5, h6 { text-wrap: balance; }
+    p, li { text-wrap: pretty; }
+
+    @page { size: letter; margin: 0; }
+    @media print {
+      html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      html, body { margin: 0; padding: 0; }
+      .doc { max-width: none !important; margin: 0 !important; padding: 0 0.75in !important; box-shadow: none !important; }
+      .hdr-space, .ftr-space { display: table-cell; height: 0.75in; }
+      h1, h2, h3, h4, h5, h6 { break-after: avoid; }
+      figure, pre, blockquote, table, .card, .swatch-row, .type-sample { break-inside: avoid; }
+      p, li { orphans: 3; widows: 3; }
+      .screen-only { display: none !important; }
+    }
+
+    /* ── Cover ── */
+    .cover {
+      padding-bottom: 56px;
+      border-bottom: 1.5px solid var(--border);
+      margin-bottom: 56px;
+    }
+    .cover-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .cover h1 {
+      font-family: var(--serif);
+      font-size: 38px;
+      font-weight: 500;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .cover-sub {
+      font-size: 15px;
+      color: var(--text-mid);
+      max-width: 520px;
+      line-height: 1.6;
+    }
+    .cover-meta {
+      margin-top: 28px;
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .meta-item { display: flex; flex-direction: column; gap: 3px; }
+    .meta-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .meta-value { font-size: 13px; color: var(--text-mid); }
+
+    /* ── Section headings ── */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 56px 0 32px;
+    }
+    .section-num {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+    .section-rule { flex: 1; height: 1px; background: var(--border); }
+    .section-divider h2 {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    h3.block-title {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 10px;
+      margin-top: 36px;
+    }
+    h4.sub-title {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      margin-top: 28px;
+    }
+
+    p { margin-bottom: 14px; color: var(--text-mid); font-size: 14px; line-height: 1.7; }
+    p strong { color: var(--text); font-weight: 600; }
+    p em { font-style: italic; color: var(--text-mid); }
+
+    ul, ol { padding-left: 20px; margin-bottom: 14px; }
+    li { margin-bottom: 5px; font-size: 14px; color: var(--text-mid); line-height: 1.65; }
+    li strong { color: var(--text); }
+
+    /* ── Cards / panels ── */
+    .card {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    .card-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .card p { margin-bottom: 0; font-size: 14px; }
+
+    .callout {
+      border-left: 2.5px solid var(--accent);
+      background: var(--accent-bg);
+      padding: 14px 18px;
+      margin-bottom: 16px;
+      border-radius: 0 4px 4px 0;
+    }
+    .callout p { margin-bottom: 0; color: var(--text); }
+
+    .warn-callout {
+      border-left: 2.5px solid var(--warn);
+      background: var(--warn-bg);
+      padding: 14px 18px;
+      margin-bottom: 16px;
+      border-radius: 0 4px 4px 0;
+    }
+    .warn-callout p { margin-bottom: 0; color: var(--text); }
+
+    /* ── Color swatches ── */
+    .swatch-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .swatch {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      min-width: 110px;
+      flex: 1;
+    }
+    .swatch-chip {
+      height: 48px;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+    }
+    .swatch-name {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: 0.04em;
+    }
+    .swatch-token {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+    .swatch-hex {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    /* ── Type samples ── */
+    .type-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+    .type-table thead tr { border-bottom: 1px solid var(--border-strong); }
+    .type-table thead th {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 500;
+      padding: 8px 0;
+      text-align: left;
+    }
+    .type-table thead th:not(:first-child) { padding-left: 16px; }
+    .type-table tbody tr { border-bottom: 1px solid var(--border); }
+    .type-table tbody td {
+      padding: 12px 0;
+      vertical-align: middle;
+      font-size: 13px;
+      color: var(--text-mid);
+    }
+    .type-table tbody td:not(:first-child) { padding-left: 16px; }
+    .type-sample-cell { font-size: 13px; color: var(--text-muted); }
+
+    .t-display { font-family: var(--serif); font-size: 34px; font-weight: 400; color: var(--text); line-height: 1.18; }
+    .t-h1      { font-family: var(--serif); font-size: 26px; font-weight: 500; color: var(--text); line-height: 1.25; }
+    .t-h2      { font-family: var(--serif); font-size: 20px; font-weight: 500; color: var(--text); line-height: 1.3; }
+    .t-h3      { font-family: var(--sans);  font-size: 16px; font-weight: 600; color: var(--text); }
+    .t-body    { font-family: var(--sans);  font-size: 17px; font-weight: 400; color: var(--text); line-height: 1.72; }
+    .t-small   { font-family: var(--sans);  font-size: 13px; font-weight: 400; color: var(--text-muted); }
+    .t-label   { font-family: var(--mono);  font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+    .t-meta    { font-family: var(--sans);  font-size: 13px; font-weight: 400; color: var(--text-muted); }
+
+    /* ── Spacing scale ── */
+    .spacing-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+      align-items: flex-end;
+    }
+    .sp-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .sp-bar {
+      background: var(--accent-bg);
+      border: 1px solid oklch(80% 0.04 192);
+      border-radius: 2px;
+      width: 32px;
+    }
+    .sp-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    /* ── Page structure diagrams ── */
+    .page-diagram {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .page-diagram-title {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+    .page-section-block {
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 10px 14px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg);
+    }
+    .page-section-block.highlight {
+      border-color: oklch(75% 0.04 192);
+      background: var(--accent-bg);
+    }
+    .page-section-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .page-section-note {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    /* ── Component pills ── */
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .component-pill {
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 10px 14px;
+      background: var(--bg);
+    }
+    .component-pill-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .component-pill-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ── Data table ── */
+    .data-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 13px; }
+    .data-table thead tr { background: var(--bg-subtle); }
+    .data-table thead th {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 9px 12px;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+    .data-table tbody td {
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      color: var(--text-mid);
+      vertical-align: top;
+    }
+    .data-table tbody td:first-child { font-weight: 500; color: var(--text); font-family: var(--mono); font-size: 12px; }
+    .data-table tbody tr:hover td { background: var(--bg-subtle); }
+
+    /* ── Avoid list ── */
+    .avoid-list { list-style: none; padding: 0; }
+    .avoid-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .avoid-list li::before {
+      content: '✕';
+      font-size: 10px;
+      color: var(--warn);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .avoid-list li span { font-size: 13px; color: var(--text-mid); line-height: 1.5; }
+    .avoid-list li strong { color: var(--text); }
+
+    /* ── Two-col layout ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ── Inline code ── */
+    code {
+      font-family: var(--mono);
+      font-size: 0.88em;
+      background: var(--bg-inset);
+      color: var(--accent);
+      padding: 1px 5px;
+      border-radius: 2px;
+    }
+    pre {
+      background: var(--bg-inset);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 16px;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--text);
+      overflow-x: auto;
+      margin-bottom: 16px;
+    }
+
+    /* ── Footer ── */
+    .doc-footer {
+      margin-top: 72px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .doc-footer span {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── Sanity field table ── */
+    .field-type { color: var(--accent-mid); font-family: var(--mono); font-size: 11px; }
+    .field-req { font-family: var(--mono); font-size: 10px; color: var(--warn); }
+    .field-opt { font-family: var(--mono); font-size: 10px; color: var(--text-muted); }
+  </style>
+</head>
+<body>
+<main class="doc">
+  <table class="doc-frame" role="presentation">
+    <thead><tr><td class="hdr-space"></td></tr></thead>
+    <tbody><tr><td>
+
+      <!-- ══ COVER ══ -->
+      <div class="cover">
+        <p class="cover-label">Design Handoff · v1.0 · June 2026</p>
+        <h1>AI Tools Blog<br>Design Specification</h1>
+        <p class="cover-sub">A minimal, editorial design direction for an SEO blog reviewing AI tools. Built to feel like a smart research desk — not a startup landing page. This document covers visual system, page structures, components, content model, and developer guidance.</p>
+        <div class="cover-meta">
+          <div class="meta-item">
+            <span class="meta-label">First Article</span>
+            <span class="meta-value">Is Claude Pro Worth It in 2026?</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Stack</span>
+            <span class="meta-value">Next.js · Sanity CMS · Newsletter</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Pages Specified</span>
+            <span class="meta-value">Homepage · Blog Post · Category</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Direction</span>
+            <span class="meta-value">Editorial · Minimal · Trustworthy</span>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ══ 1. VISUAL CONCEPT ══ -->
+      <div class="section-divider">
+        <span class="section-num">01</span>
+        <div class="section-rule"></div>
+        <h2>Visual Concept</h2>
+        <div class="section-rule"></div>
+      </div>
+
+      <h3 class="block-title">Direction: The Research Desk</h3>
+      <p>The blog should feel like a well-organized notebook kept by someone who reads everything. Informed, calm, lightly opinionated. Think long-form tech journalism crossed with a personal writing practice — not a SaaS product page.</p>
+      <p>The strongest visual reference is <strong>a warm printed page</strong>: generous margins, a measured type scale, plenty of breathing room. Color comes from restraint, not decoration. Hierarchy comes from type weight and spacing, not from cards and badges.</p>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-label">Feel like</div>
+          <p>Stratechery, The Diff, early Six Colors. A publication that trusts its readers. Clean, confident, slightly premium.</p>
+        </div>
+        <div class="card">
+          <div class="card-label">Not like</div>
+          <p>Futurism, AI tool landing pages, Product Hunt launches. No glass morphism. No gradient mesh heroes. No "Trusted by 10,000+ teams."</p>
+        </div>
+      </div>
+
+      <h4 class="sub-title">Three design principles</h4>
+      <ol>
+        <li><strong>Typography does the work.</strong> Headlines are set in a serif; body copy is comfortable at a long read. Most visual interest comes from type scale, not decoration.</li>
+        <li><strong>Whitespace earns trust.</strong> Generous spacing between sections signals confidence. Cramped, busy layouts signal desperation.</li>
+        <li><strong>Color is a tool, not a mood.</strong> Accent color is used sparingly — links, the verdict badge, the newsletter CTA. The rest is warm neutrals.</li>
+      </ol>
+
+
+      <!-- ══ 2. COLOR ══ -->
+      <div class="section-divider">
+        <span class="section-num">02</span>
+        <div class="section-rule"></div>
+        <h2>Color Palette</h2>
+        <div class="section-rule"></div>
+      </div>
+
+      <p>All colors are defined in <code>oklch</code> for perceptual consistency. The palette is intentionally warm-neutral — cream backgrounds, near-black ink, and a single deep teal-green as the only true accent.</p>
+
+      <h4 class="sub-title">Background &amp; Surface</h4>
+      <div class="swatch-row">
+        <div class="swatch">
+          <div class="swatch-chip" style="background: oklch(97.5% 0.007 78);"></div>
+          <div class="swatch-name">Canvas</div>
+          <div class="swatch-token">--bg</div>
+          <div class="swatch-hex">oklch(97.5% 0.007 78)</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-chip" style="background: oklch(93.5% 0.010 74);"></div>
+          <div class="swatch-name">Subtle</div>
+          <div class="swatch-token">--bg-subtle</div>
+          <div class="swatch-hex">oklch(93.5% 0.010 74)</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-chip" style="background: oklch(90% 0.012 74);"></div>
+          <div class="swatch-name">Inset</div>
+          <div class="swatch-token">--bg-inset</div>
+          <div class="swatch-hex">oklch(90% 0.012 74)</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-chip" style="background: oklch(86% 0.010 74); border: 1px solid oklch(80% 0.012 74);"></div>
+          <div class="swatch-name">Border</div>
+          <div class="swatch-token">--border</div>
+          <div class="swatch-hex">oklch(86% 0.010 74)</div>
+        </div>
+      </div>
+
+      <h4 class="sub-title">Text</h4>
+      <div class="swatch-row">
+        <div class="swatch">
+          <div class="swatch-chip" style="background: oklch(17% 0.018 68);"></div>
+          <div class="swatch-name">Primary</div>
+          <div class="swatch-token">--text</div>
+          <div class="swatch-hex">oklch(17% 0.018 68)</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-chip" style="background: oklch(42% 0.018 68);"></div>
+          <div class="swatch-name">Secondary</div>
+          <div class="swatch-token">--text-mid</div>
+          <div class="swatch-hex">oklch(42% 0.018 68)</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-chip" style="background: oklch(60% 0.012 68);"></div>
+          <div class="swatch-name">Muted</div>
+          <div class="swatch-token">--text-muted</div>
+          <div class="swatch-hex">oklch(60% 0.012 68)</div>
+        </div>
+      </div>
+
+      <h4 class="sub-title">Accent &amp; Semantic</h4>
+      <div class="swatch-row">
+        <div class="swatch">
+          <div class="swatch-chip" style="background: oklch(38% 0.082 192);"></div>
+          <div class="swatch-name">Accent</div>
+          <div class="swatch-token">--accent</div>
+          <div class="swatch-hex">oklch(38% 0.082 192) — deep teal</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-chip" style="background: oklch(55% 0.055 192);"></div>
+          <div class="swatch-name">Accent Mid</div>
+          <div class="swatch-token">--accent-mid</div>
+          <div class="swatch-hex">oklch(55% 0.055 192) — links</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-chip" style="background: oklch(95% 0.025 192);"></div>
+          <div class="swatch-name">Accent BG</div>
+          <div class="swatch-token">--accent-bg</div>
+          <div class="swatch-hex">oklch(95% 0.025 192) — callouts</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-chip" style="background: oklch(58% 0.13 55);"></div>
+          <div class="swatch-name">Warn / Amber</div>
+          <div class="swatch-token">--warn</div>
+          <div class="swatch-hex">oklch(58% 0.13 55) — verdicts only</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <p><strong>Usage rule:</strong> The accent teal appears only on links, the Quick Verdict badge, the active TOC item, and the newsletter CTA button. Everything else is warm neutrals. If a component doesn't need the accent, it doesn't get it.</p>
+      </div>
+
+
+      <!-- ══ 3. TYPOGRAPHY ══ -->
+      <div class="section-divider">
+        <span class="section-num">03</span>
+        <div class="section-rule"></div>
+        <h2>Typography</h2>
+        <div class="section-rule"></div>
+      </div>
+
+      <p><strong>Lora</strong> (serif, Google Fonts) carries all headlines. It's bookish without being stiff — well-suited to long-form editorial. <strong>IBM Plex Sans</strong> handles body text and UI. It reads cleanly at small sizes and has a slightly technical, trustworthy tone appropriate for tool reviews. <strong>IBM Plex Mono</strong> appears only for metadata labels, tokens, and code.</p>
+
+      <table class="type-table">
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th>Sample</th>
+            <th>Spec</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="type-sample-cell">Display</td>
+            <td><span class="t-display">Is Claude Pro Worth It?</span></td>
+            <td>Lora 400 · 48px / 54px · hero articles</td>
+          </tr>
+          <tr>
+            <td class="type-sample-cell">H1</td>
+            <td><span class="t-h1">Best AI Writing Tools 2026</span></td>
+            <td>Lora 500 · 36px / 44px · page titles</td>
+          </tr>
+          <tr>
+            <td class="type-sample-cell">H2</td>
+            <td><span class="t-h2">What's included in Claude Pro</span></td>
+            <td>Lora 500 · 26px / 34px · section heads</td>
+          </tr>
+          <tr>
+            <td class="type-sample-cell">H3</td>
+            <td><span class="t-h3">Performance vs. Price</span></td>
+            <td>IBM Plex Sans 600 · 17px · sub-sections</td>
+          </tr>
+          <tr>
+            <td class="type-sample-cell">Body</td>
+            <td><span class="t-body">Claude Pro offers extended context windows, priority access, and the ability to create Projects.</span></td>
+            <td>IBM Plex Sans 400 · 17px / 1.72 · max 680px wide</td>
+          </tr>
+          <tr>
+            <td class="type-sample-cell">Small / Meta</td>
+            <td><span class="t-meta">Updated June 2026 · 8 min read</span></td>
+            <td>IBM Plex Sans 400 · 13px · article metadata</td>
+          </tr>
+          <tr>
+            <td class="type-sample-cell">Label</td>
+            <td><span class="t-label">Category · Tag</span></td>
+            <td>IBM Plex Mono · 11px · 0.08em tracking · uppercase</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4 class="sub-title">Line length &amp; rhythm rules</h4>
+      <ul>
+        <li>Article body text: maximum <strong>680px wide</strong> (approximately 65–72 characters per line). Never full-bleed.</li>
+        <li>Body line-height: <strong>1.72</strong>. H2 line-height: 1.3. Display: 1.15.</li>
+        <li>Paragraph spacing: <strong>1em</strong> between paragraphs. No extra leading on short paragraphs.</li>
+        <li>Use <code>text-wrap: pretty</code> on body copy to eliminate single-word orphans at line ends.</li>
+        <li>Do not justify body text. Left-aligned only.</li>
+      </ul>
+
+
+      <!-- ══ 4. SPACING ══ -->
+      <div class="section-divider">
+        <span class="section-num">04</span>
+        <div class="section-rule"></div>
+        <h2>Spacing &amp; Layout</h2>
+        <div class="section-rule"></div>
+      </div>
+
+      <h4 class="sub-title">Base spacing scale (4px unit)</h4>
+      <div class="spacing-row">
+        <div class="sp-item"><div class="sp-bar" style="height:4px;"></div><span class="sp-label">4<br>xs</span></div>
+        <div class="sp-item"><div class="sp-bar" style="height:8px;"></div><span class="sp-label">8<br>sm</span></div>
+        <div class="sp-item"><div class="sp-bar" style="height:12px;"></div><span class="sp-label">12<br>—</span></div>
+        <div class="sp-item"><div class="sp-bar" style="height:16px;"></div><span class="sp-label">16<br>md</span></div>
+        <div class="sp-item"><div class="sp-bar" style="height:24px;"></div><span class="sp-label">24<br>—</span></div>
+        <div class="sp-item"><div class="sp-bar" style="height:32px;"></div><span class="sp-label">32<br>lg</span></div>
+        <div class="sp-item"><div class="sp-bar" style="height:48px;"></div><span class="sp-label">48<br>xl</span></div>
+        <div class="sp-item"><div class="sp-bar" style="height:64px;"></div><span class="sp-label">64<br>2xl</span></div>
+        <div class="sp-item"><div class="sp-bar" style="height:96px;"></div><span class="sp-label">96<br>3xl</span></div>
+        <div class="sp-item"><div class="sp-bar" style="height:128px;"></div><span class="sp-label">128<br>4xl</span></div>
+      </div>
+
+      <h4 class="sub-title">Layout rules</h4>
+      <ul>
+        <li><strong>Page max-width:</strong> <code>1160px</code>, centered with <code>auto</code> margins, 24px side padding on mobile.</li>
+        <li><strong>Content column (articles):</strong> <code>max-width: 680px</code>, centered within the page.</li>
+        <li><strong>TOC / sidebar:</strong> <code>260px</code> fixed width, only visible on screens ≥1100px wide. Sticky within the article.</li>
+        <li><strong>Section gap (homepage):</strong> <code>96px</code> between top-level sections.</li>
+        <li><strong>Component internal padding:</strong> <code>24px</code> for cards; <code>16px</code> for compact components.</li>
+        <li><strong>Border-radius:</strong> <code>4px</code> maximum everywhere. No pill shapes except category chips which use <code>2px</code>. Avoid <code>12px+</code> radii — they soften the editorial feel.</li>
+        <li><strong>Grid:</strong> 12-column with <code>24px</code> gutters for large layouts; simpler single-column for article content.</li>
+      </ul>
+
+
+      <!-- ══ 5. HOMEPAGE ══ -->
+      <div class="section-divider">
+        <span class="section-num">05</span>
+        <div class="section-rule"></div>
+        <h2>Homepage — Structure</h2>
+        <div class="section-rule"></div>
+      </div>
+
+      <div class="page-diagram">
+        <div class="page-diagram-title">Page Structure — Homepage</div>
+
+        <div class="page-section-block">
+          <span class="page-section-name">Nav</span>
+          <span class="page-section-note">Logo left · Links right · No hamburger on desktop</span>
+        </div>
+        <div class="page-section-block highlight">
+          <span class="page-section-name">Hero</span>
+          <span class="page-section-note">Site tagline + featured article · no background image</span>
+        </div>
+        <div class="page-section-block">
+          <span class="page-section-name">Latest Articles</span>
+          <span class="page-section-note">2-column list · title, category, date, 1-line summary</span>
+        </div>
+        <div class="page-section-block">
+          <span class="page-section-name">Topics / Categories</span>
+          <span class="page-section-note">Horizontal strip of category chips</span>
+        </div>
+        <div class="page-section-block highlight">
+          <span class="page-section-name">Newsletter Signup</span>
+          <span class="page-section-note">Full-width warm-toned section · email input + CTA</span>
+        </div>
+        <div class="page-section-block">
+          <span class="page-section-name">Footer</span>
+          <span class="page-section-note">Simple: site name · nav links · copyright</span>
+        </div>
+      </div>
+
+      <h3 class="block-title">Hero section</h3>
+      <p>The hero is <strong>typographic only</strong>. No hero image, no background gradient. The site tagline runs large in Lora; the featured article appears directly beneath it as a large headline link with its category label and estimated read time.</p>
+      <ul>
+        <li>Tagline: something short that states the site's purpose. Example: <em>"Honest reviews of AI tools. Updated when it matters."</em></li>
+        <li>Featured article block: category label (mono, uppercase) → article title (serif, Display size) → one-sentence hook → read time.</li>
+        <li>A single <code>border-bottom</code> separates the hero from the article list below. No card, no box, no shadow.</li>
+        <li>Vertical padding: <code>80px</code> top, <code>72px</code> bottom.</li>
+      </ul>
+
+      <h3 class="block-title">Latest Articles list</h3>
+      <p>Two-column on desktop, single-column on mobile. Each article row contains: <strong>category label</strong> (mono, 11px), <strong>title</strong> (serif, ~22px), <strong>one-line deck</strong> (sans, 14px, muted), and <strong>date + read time</strong> (mono, muted). No thumbnails. No card backgrounds. Articles are separated by a hairline border.</p>
+
+      <div class="callout">
+        <p><strong>No thumbnail images on the homepage.</strong> The blog's value is the writing, not photography. Thumbnails invite clutter and force commitment to image production at scale. If there's strong demand later, revisit — but start without them.</p>
+      </div>
+
+      <h3 class="block-title">Newsletter section</h3>
+      <p>Full-width section with a <code>--bg-subtle</code> background, <code>96px</code> vertical padding. Single column, centered. Headline in Lora (~30px), one-line description beneath, then email input + button on one row. The button uses <code>--accent</code>.</p>
+      <ul>
+        <li>Input and button: same height (<code>44px</code>), same border radius, flush side-by-side on desktop. Stacked on mobile.</li>
+        <li>No social proof numbers unless they're real. "Join 4,000 readers" only if it's true — otherwise omit entirely.</li>
+        <li>Connect to ConvertKit, Beehiiv, or similar via a simple form action. No custom modal.</li>
+      </ul>
+
+
+      <!-- ══ 6. BLOG POST ══ -->
+      <div class="section-divider">
+        <span class="section-num">06</span>
+        <div class="section-rule"></div>
+        <h2>Blog Post Page — Structure</h2>
+        <div class="section-rule"></div>
+      </div>
+
+      <div class="page-diagram">
+        <div class="page-diagram-title">Page Structure — Blog Post</div>
+        <div class="page-section-block">
+          <span class="page-section-name">Nav</span>
+          <span class="page-section-note">Same global nav</span>
+        </div>
+        <div class="page-section-block highlight">
+          <span class="page-section-name">Article Header</span>
+          <span class="page-section-note">Category · Title · Updated date · Read time</span>
+        </div>
+        <div class="page-section-block highlight">
+          <span class="page-section-name">Quick Verdict Box</span>
+          <span class="page-section-note">2–3 sentence summary · score or badge · below-the-fold anchor</span>
+        </div>
+        <div class="page-section-block">
+          <span class="page-section-name">Article Body + TOC</span>
+          <span class="page-section-note">Body 680px · sticky TOC 260px at ≥1100px</span>
+        </div>
+        <div class="page-section-block">
+          <span class="page-section-name">Comparison Table</span>
+          <span class="page-section-note">Inline within body · scrollable on mobile</span>
+        </div>
+        <div class="page-section-block">
+          <span class="page-section-name">Pros / Cons</span>
+          <span class="page-section-note">Two-column list block</span>
+        </div>
+        <div class="page-section-block">
+          <span class="page-section-name">FAQ</span>
+          <span class="page-section-note">Expandable accordion · schema markup</span>
+        </div>
+        <div class="page-section-block highlight">
+          <span class="page-section-name">Newsletter CTA</span>
+          <span class="page-section-note">Inline, post-article · matches homepage newsletter style</span>
+        </div>
+      </div>
+
+      <h3 class="block-title">Article header</h3>
+      <p>Category label (mono, uppercase, accent color) → H1 in Lora Display → updated date + read time in muted mono. No hero image. A single <code>border-bottom</code> below the header area. Vertical padding above: <code>56px</code>. Do not display author name unless the site eventually has multiple contributors.</p>
+
+      <h3 class="block-title">Quick Verdict box</h3>
+      <p>The most important component on the post page. Appears just below the article header, before the TOC or body. It answers: <em>"Should I read this whole thing, or do I just need the bottom line?"</em></p>
+      <ul>
+        <li>Visual treatment: <code>--bg-subtle</code> background, left border in <code>--accent</code> (3px), <code>24px</code> padding.</li>
+        <li>Content: 2–3 sentence verdict + a score or recommendation label (e.g. "Worth it for most users" or "Best for: power users on Claude API").</li>
+        <li>Sanity field: <code>verdictSummary</code> (text), <code>verdictLabel</code> (string), <code>verdictScore</code> (optional number 1–10).</li>
+        <li>Do not make this a complex widget. It should be readable in 10 seconds.</li>
+      </ul>
+
+      <h3 class="block-title">Table of Contents (TOC)</h3>
+      <p>On desktop (≥1100px): sticky sidebar, <code>260px</code> wide, positioned to the right of the body column using CSS Grid (<code>680px + gap + 260px</code>). Highlights the active H2 as the reader scrolls using <code>IntersectionObserver</code>. Active item gets <code>--accent</code> color. On mobile: collapsed, shown as a short dropdown above the article body.</p>
+
+      <h3 class="block-title">Comparison table</h3>
+      <p>Appears inline within the body when the article compares products. Uses a simple <code>&lt;table&gt;</code> with a sticky first column on mobile (for the row label). Header row gets <code>--bg-subtle</code>; alternating rows are not striped — use hairline borders only. Cells are left-aligned. On screens &lt;680px, add <code>overflow-x: auto</code> to a wrapper div.</p>
+
+      <h3 class="block-title">Pros / Cons</h3>
+      <p>Two-column on desktop (side by side), single-column on mobile. Pros column has a faint green-accent left border; Cons has an amber-accent left border. Simple bulleted lists, no icons, no emoji. Title: "Pros" / "Cons" in H3 weight.</p>
+
+      <h3 class="block-title">FAQ section</h3>
+      <p>Accordion component. Each item: question in <strong>IBM Plex Sans 600</strong> (16px), answer expands below. Animated with a simple CSS max-height transition. Add <code>@type: FAQPage</code> JSON-LD schema for SEO. Questions come from a Sanity <code>faq</code> array field (each item: <code>question</code>, <code>answer</code> as block content).</p>
+
+
+      <!-- ══ 7. CATEGORY PAGE ══ -->
+      <div class="section-divider">
+        <span class="section-num">07</span>
+        <div class="section-rule"></div>
+        <h2>Category Page — Structure</h2>
+        <div class="section-rule"></div>
+      </div>
+
+      <div class="page-diagram">
+        <div class="page-diagram-title">Page Structure — Category</div>
+        <div class="page-section-block">
+          <span class="page-section-name">Nav</span>
+          <span class="page-section-note">Same global nav · active category highlighted</span>
+        </div>
+        <div class="page-section-block highlight">
+          <span class="page-section-name">Category Header</span>
+          <span class="page-section-note">Title · short intro · article count</span>
+        </div>
+        <div class="page-section-block">
+          <span class="page-section-name">Topic Filter Strip</span>
+          <span class="page-section-note">Horizontal, scrollable chip row on mobile</span>
+        </div>
+        <div class="page-section-block">
+          <span class="page-section-name">Article List</span>
+          <span class="page-section-note">Same as homepage list · 2-col desktop · 1-col mobile</span>
+        </div>
+        <div class="page-section-block">
+          <span class="page-section-name">Newsletter CTA</span>
+          <span class="page-section-note">Compact version · below article list</span>
+        </div>
+      </div>
+
+      <p>The category header has the category name in H1 (Lora), a one-sentence description, and an article count in muted mono. No decorative illustration. A horizontal strip of sub-topic chips allows filtering within the category. Chips are small (<code>28px</code> tall), use <code>--bg-inset</code> background and become filled with <code>--accent</code> when active.</p>
+      <p>The article list matches the homepage list exactly in structure. Consistency between pages reduces the cognitive load of navigation — readers know what they're looking at immediately.</p>
+
+
+      <!-- ══ 8. COMPONENTS ══ -->
+      <div class="section-divider">
+        <span class="section-num">08</span>
+        <div class="section-rule"></div>
+        <h2>Component List</h2>
+        <div class="section-rule"></div>
+      </div>
+
+      <p>Build these as standalone components in <code>components/</code>. Name each file after its role, not its location.</p>
+
+      <div class="component-grid">
+        <div class="component-pill">
+          <div class="component-pill-name">ArticleRow</div>
+          <div class="component-pill-desc">Category label · title · deck · date · read time</div>
+        </div>
+        <div class="component-pill">
+          <div class="component-pill-name">ArticleHeader</div>
+          <div class="component-pill-desc">Post page header — category, title, meta</div>
+        </div>
+        <div class="component-pill">
+          <div class="component-pill-name">VerdictBox</div>
+          <div class="component-pill-desc">Quick summary with label and optional score</div>
+        </div>
+        <div class="component-pill">
+          <div class="component-pill-name">TableOfContents</div>
+          <div class="component-pill-desc">Sticky desktop sidebar + mobile dropdown</div>
+        </div>
+        <div class="component-pill">
+          <div class="component-pill-name">ComparisonTable</div>
+          <div class="component-pill-desc">Scrollable product comparison grid</div>
+        </div>
+        <div class="component-pill">
+          <div class="component-pill-name">ProsConsList</div>
+          <div class="component-pill-desc">Two-column pros and cons block</div>
+        </div>
+        <div class="component-pill">
+          <div class="component-pill-name">FAQAccordion</div>
+          <div class="component-pill-desc">Expandable FAQ with schema markup</div>
+        </div>
+        <div class="component-pill">
+          <div class="component-pill-name">NewsletterSignup</div>
+          <div class="component-pill-desc">Email input + CTA. Two sizes: full / inline</div>
+        </div>
+        <div class="component-pill">
+          <div class="component-pill-name">CategoryChip</div>
+          <div class="component-pill-desc">Small pill for category/topic tags</div>
+        </div>
+        <div class="component-pill">
+          <div class="component-pill-name">SiteNav</div>
+          <div class="component-pill-desc">Logo + nav links. Mobile: hamburger drawer</div>
+        </div>
+        <div class="component-pill">
+          <div class="component-pill-name">SiteFooter</div>
+          <div class="component-pill-desc">Minimal: site name, links, copyright line</div>
+        </div>
+        <div class="component-pill">
+          <div class="component-pill-name">PortableTextRenderer</div>
+          <div class="component-pill-desc">Maps Sanity block content to styled HTML</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <p><strong>No card component needed.</strong> The site doesn't use cards. Article lists are built from <code>ArticleRow</code> items separated by hairline borders. Resist the urge to wrap rows in boxes.</p>
+      </div>
+
+
+      <!-- ══ 9. MOBILE ══ -->
+      <div class="section-divider">
+        <span class="section-num">09</span>
+        <div class="section-rule"></div>
+        <h2>Mobile Layout Notes</h2>
+        <div class="section-rule"></div>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr><th>Element</th><th>Desktop</th><th>Mobile (&lt;768px)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Nav</td>
+            <td>Horizontal links</td>
+            <td>Logo + hamburger → slide-in drawer</td>
+          </tr>
+          <tr>
+            <td>Hero title</td>
+            <td>Display / 48px</td>
+            <td>36px · same weight</td>
+          </tr>
+          <tr>
+            <td>Article list</td>
+            <td>2-column grid</td>
+            <td>1-column stack</td>
+          </tr>
+          <tr>
+            <td>TOC</td>
+            <td>Sticky sidebar (260px)</td>
+            <td>Collapsed dropdown above body</td>
+          </tr>
+          <tr>
+            <td>Comparison table</td>
+            <td>Full table</td>
+            <td>overflow-x: auto · sticky row labels</td>
+          </tr>
+          <tr>
+            <td>Pros / Cons</td>
+            <td>Side-by-side columns</td>
+            <td>Stacked: Pros then Cons</td>
+          </tr>
+          <tr>
+            <td>Newsletter form</td>
+            <td>Input + button inline</td>
+            <td>Stacked, full-width button</td>
+          </tr>
+          <tr>
+            <td>Category chips</td>
+            <td>Wrap to new lines</td>
+            <td>Horizontal scroll · no line-wrap</td>
+          </tr>
+          <tr>
+            <td>Page padding</td>
+            <td>0 auto / max-width</td>
+            <td>16px side padding</td>
+          </tr>
+          <tr>
+            <td>Body font size</td>
+            <td>17px</td>
+            <td>16px</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>Minimum touch target: <strong>44×44px</strong> for all interactive elements. Use <code>min-height</code> on nav links, category chips, and accordion triggers. On mobile, the hero drops the featured article title to H1 size (36px) — still large, still clear, no shrinking to illegibility.</p>
+
+
+      <!-- ══ 10. SANITY ══ -->
+      <div class="section-divider">
+        <span class="section-num">10</span>
+        <div class="section-rule"></div>
+        <h2>Sanity Content Fields</h2>
+        <div class="section-rule"></div>
+      </div>
+
+      <h4 class="sub-title">Document type: <code>post</code></h4>
+      <table class="data-table">
+        <thead>
+          <tr><th>Field</th><th>Type</th><th>Required</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>title</td><td><span class="field-type">string</span></td><td><span class="field-req">required</span></td><td>Article title — shown in H1</td></tr>
+          <tr><td>slug</td><td><span class="field-type">slug</span></td><td><span class="field-req">required</span></td><td>URL path, auto-generated from title</td></tr>
+          <tr><td>updatedAt</td><td><span class="field-type">datetime</span></td><td><span class="field-req">required</span></td><td>"Last updated" shown in article header</td></tr>
+          <tr><td>category</td><td><span class="field-type">reference → category</span></td><td><span class="field-req">required</span></td><td>One primary category</td></tr>
+          <tr><td>tags</td><td><span class="field-type">array of string</span></td><td><span class="field-opt">optional</span></td><td>Sub-topics; used for filtering</td></tr>
+          <tr><td>readingTimeMin</td><td><span class="field-type">number</span></td><td><span class="field-opt">optional</span></td><td>Override auto-calculated time</td></tr>
+          <tr><td>seoDescription</td><td><span class="field-type">text (160 char)</span></td><td><span class="field-req">required</span></td><td>Meta description for search</td></tr>
+          <tr><td>verdictSummary</td><td><span class="field-type">text</span></td><td><span class="field-opt">optional</span></td><td>2–3 sentences for Quick Verdict box</td></tr>
+          <tr><td>verdictLabel</td><td><span class="field-type">string</span></td><td><span class="field-opt">optional</span></td><td>"Worth it for most" / "Skip for now"</td></tr>
+          <tr><td>verdictScore</td><td><span class="field-type">number (1–10)</span></td><td><span class="field-opt">optional</span></td><td>Numeric score if desired</td></tr>
+          <tr><td>body</td><td><span class="field-type">array (block content)</span></td><td><span class="field-req">required</span></td><td>Main article body via Portable Text</td></tr>
+          <tr><td>comparisonTable</td><td><span class="field-type">object (custom)</span></td><td><span class="field-opt">optional</span></td><td>Headers + rows for ComparisonTable</td></tr>
+          <tr><td>pros</td><td><span class="field-type">array of string</span></td><td><span class="field-opt">optional</span></td><td>List for ProsConsList</td></tr>
+          <tr><td>cons</td><td><span class="field-type">array of string</span></td><td><span class="field-opt">optional</span></td><td>List for ProsConsList</td></tr>
+          <tr><td>faq</td><td><span class="field-type">array of {q, a}</span></td><td><span class="field-opt">optional</span></td><td>FAQAccordion + JSON-LD schema</td></tr>
+          <tr><td>featured</td><td><span class="field-type">boolean</span></td><td><span class="field-opt">optional</span></td><td>Pin to homepage hero slot</td></tr>
+        </tbody>
+      </table>
+
+      <h4 class="sub-title">Document type: <code>category</code></h4>
+      <table class="data-table">
+        <thead>
+          <tr><th>Field</th><th>Type</th><th>Required</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>title</td><td><span class="field-type">string</span></td><td><span class="field-req">required</span></td><td>Display name, e.g. "AI Writing Tools"</td></tr>
+          <tr><td>slug</td><td><span class="field-type">slug</span></td><td><span class="field-req">required</span></td><td>URL path for category page</td></tr>
+          <tr><td>description</td><td><span class="field-type">text</span></td><td><span class="field-opt">optional</span></td><td>One sentence shown in category header</td></tr>
+          <tr><td>sortOrder</td><td><span class="field-type">number</span></td><td><span class="field-opt">optional</span></td><td>Controls display order in nav / chips</td></tr>
+        </tbody>
+      </table>
+
+      <h4 class="sub-title">Document type: <code>siteSettings</code> (singleton)</h4>
+      <table class="data-table">
+        <thead>
+          <tr><th>Field</th><th>Type</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>siteName</td><td><span class="field-type">string</span></td><td>Used in nav, footer, og:site_name</td></tr>
+          <tr><td>siteTagline</td><td><span class="field-type">string</span></td><td>Hero tagline on homepage</td></tr>
+          <tr><td>newsletterHeadline</td><td><span class="field-type">string</span></td><td>Headline for newsletter section</td></tr>
+          <tr><td>newsletterDescription</td><td><span class="field-type">string</span></td><td>One-line description</td></tr>
+          <tr><td>navLinks</td><td><span class="field-type">array of {label, href}</span></td><td>Top nav items</td></tr>
+        </tbody>
+      </table>
+
+
+      <!-- ══ 11. NEXT.JS NOTES ══ -->
+      <div class="section-divider">
+        <span class="section-num">11</span>
+        <div class="section-rule"></div>
+        <h2>Next.js Developer Notes</h2>
+        <div class="section-rule"></div>
+      </div>
+
+      <h4 class="sub-title">Routing</h4>
+      <ul>
+        <li><code>/</code> → Homepage (ISR, revalidate every 60s or on-demand via Sanity webhook)</li>
+        <li><code>/[slug]</code> → Blog post (ISR, revalidate on publish)</li>
+        <li><code>/category/[slug]</code> → Category page (ISR, revalidate on publish)</li>
+      </ul>
+
+      <h4 class="sub-title">Data fetching</h4>
+      <ul>
+        <li>Use <strong>GROQ queries</strong> in <code>lib/queries.ts</code>. Never co-locate queries in page files.</li>
+        <li>Use <strong>Next.js App Router</strong> with React Server Components for all data fetching — no <code>getStaticProps</code>.</li>
+        <li>Sanity client: <code>@sanity/client</code> with a CDN-backed <code>withConfig</code> for production reads. Mutating requests (preview) use a token-backed client.</li>
+        <li>Enable <strong>Sanity Live Preview</strong> via <code>@sanity/next-sanity</code> for staging drafts.</li>
+      </ul>
+
+      <h4 class="sub-title">SEO</h4>
+      <ul>
+        <li>Use Next.js <code>generateMetadata()</code> per page. Export <code>alternates.canonical</code> to prevent duplicate-content issues from pagination or tag pages.</li>
+        <li>Add <code>Article</code> JSON-LD schema on post pages: <code>headline</code>, <code>dateModified</code>, <code>author</code>.</li>
+        <li>Add <code>FAQPage</code> JSON-LD schema on posts that have a <code>faq</code> array.</li>
+        <li>Add <code>WebSite</code> + <code>SearchAction</code> schema on the homepage.</li>
+        <li>Use <code>next/image</code> for any images (ogImages, future thumbnails). Set <code>sizes</code> attribute properly.</li>
+      </ul>
+
+      <h4 class="sub-title">Performance targets</h4>
+      <ul>
+        <li>Lighthouse score ≥ 95 on all pages. No layout shift from fonts (use <code>font-display: swap</code> + preload links).</li>
+        <li>Ship Google Fonts as self-hosted via <code>next/font/google</code> — this eliminates the external font request and ensures CLS = 0.</li>
+        <li>Do not load any client-side JS frameworks just for the newsletter form. A simple <code>&lt;form&gt;</code> action pointing to your email provider's endpoint is enough. Progressive-enhance with a small React component only if you need AJAX submission.</li>
+        <li>The TOC's <code>IntersectionObserver</code> is the only required client JS on the post page. Keep everything else server-rendered.</li>
+      </ul>
+
+      <h4 class="sub-title">CSS approach</h4>
+      <ul>
+        <li>Use <strong>CSS custom properties</strong> (tokens) defined in a global <code>:root</code> block in <code>globals.css</code>. Match this spec's token names exactly for consistency.</li>
+        <li>Prefer <strong>CSS modules</strong> per-component for scoped styles, with global tokens always available via <code>var(--token)</code>.</li>
+        <li>No Tailwind unless it's already in use. The design system here is thin enough that custom CSS is more maintainable at this scale.</li>
+        <li>The <code>PortableTextRenderer</code> component needs a companion <code>.prose</code> stylesheet that styles all block-content output (p, ul, ol, blockquote, h2, h3, strong, a, code). Write it explicitly — do not use Tailwind Typography plugin.</li>
+      </ul>
+
+
+      <!-- ══ 12. WHAT TO AVOID ══ -->
+      <div class="section-divider">
+        <span class="section-num">12</span>
+        <div class="section-rule"></div>
+        <h2>What to Avoid</h2>
+        <div class="section-rule"></div>
+      </div>
+
+      <p>These patterns appear by default in AI-generated frontends and make the blog look generic. Treat this as a checklist to audit the build before launch.</p>
+
+      <h4 class="sub-title">Visual anti-patterns</h4>
+      <ul class="avoid-list">
+        <li><span><strong>Purple-to-blue gradient backgrounds.</strong> The entire purple/indigo/AI-brand spectrum is overused. The accent is teal-green on warm cream. No gradients anywhere.</span></li>
+        <li><span><strong>Cards nested inside cards.</strong> Article rows are not cards. The site has zero nested card patterns.</span></li>
+        <li><span><strong>Rounded-square icon tiles above headings.</strong> Do not prefix section headings with a badge/chip/icon in a rounded box. If you need an icon, use a thin inline SVG in the copy, not a decorative container.</span></li>
+        <li><span><strong>Metric blocks ("10,000+ users", "99% uptime").</strong> This is a blog, not a SaaS product. Do not manufacture credibility metrics.</span></li>
+        <li><span><strong>Hero images or stock photography.</strong> The blog starts image-free. No illustrated hero. No person-at-laptop stock photo.</span></li>
+        <li><span><strong>Glass morphism / frosted surfaces.</strong> <code>backdrop-filter: blur()</code> is off-limits. It reads as dated AI-aesthetic immediately.</span></li>
+        <li><span><strong>Bounce or elastic easing on any animation.</strong> Use standard ease-out or ease-in-out. Bounce easing signals "AI-generated" to experienced eyes.</span></li>
+        <li><span><strong>Gray text on a colored background.</strong> If the background has color, use near-black text. Muted text only on neutral backgrounds.</span></li>
+        <li><span><strong>Inter or system-ui as the heading font.</strong> Headings must be Lora. Inter for headings is the single most common tell of an AI-generated design in this category.</span></li>
+        <li><span><strong>Pure black (#000000) or pure white (#ffffff).</strong> Always use the warm-toned token colors. Pure black feels harsh against warm backgrounds.</span></li>
+        <li><span><strong>Excessive shadow on cards or elements.</strong> Box-shadow should be used sparingly — only on the TOC sticky sidebar (a faint drop) and modal overlays. Never a glowing shadow.</span></li>
+        <li><span><strong>"Explore our features" or SaaS copy patterns.</strong> Every word of copy should sound like a person who has actually used the tools. No feature marketing language.</span></li>
+      </ul>
+
+      <div class="warn-callout">
+        <p><strong>The fastest way to make this look generic:</strong> use Inter for headlines, wrap article rows in cards with <code>border-radius: 12px</code>, and add a purple gradient to the hero. Avoid all three and the design immediately reads as intentional.</p>
+      </div>
+
+
+      <!-- ══ FOOTER ══ -->
+      <div class="doc-footer">
+        <span>AI Tools Blog · Design Handoff v1.0</span>
+        <span>June 2026 · For handoff to Claude Code</span>
+      </div>
+
+    </td></tr></tbody>
+    <tfoot><tr><td class="ftr-space"></td></tr></tfoot>
+  </table>
+</main>
+</body>
+</html>
