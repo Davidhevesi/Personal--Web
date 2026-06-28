@@ -60,7 +60,7 @@ export default async function HomePage() {
               </div>
               <div className={styles.stat}>
                 <dt className={styles.statNum}>0</dt>
-                <dd className={styles.statLabel}>affiliate links</dd>
+                <dd className={styles.statLabel}>paid placements</dd>
               </div>
             </dl>
           </div>

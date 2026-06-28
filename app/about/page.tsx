@@ -6,7 +6,7 @@ import { SITE_NAME, SITE_URL, AUTHOR, PERSON, absUrl } from '@/lib/seo'
 import styles from './page.module.css'
 
 const title = 'About & review methodology'
-const description = `Who writes ${SITE_NAME}, and how every AI tool is tested, scored, and reviewed — independently, with no affiliate links.`
+const description = `Who writes ${SITE_NAME}, and how every AI tool is tested, scored, and reviewed — independently, with affiliate links always disclosed.`
 
 export const metadata: Metadata = {
   title,
@@ -51,7 +51,7 @@ export default function AboutPage() {
             <h1 className={styles.title}>Honest reviews, from someone who actually uses the tools.</h1>
             <p className={styles.lede}>
               {SITE_NAME} is written by {AUTHOR.name}. Every review here comes from real, daily,
-              paid-for use — not press releases, demos, or affiliate deals.
+              paid-for use — not press releases, demos, or vendor talking points.
             </p>
           </header>
 
@@ -60,7 +60,7 @@ export default function AboutPage() {
             <p className={styles.p}>
               I&apos;m {AUTHOR.name}. I build software and use AI tools every day for writing, coding,
               and research. {SITE_NAME} exists because most &ldquo;best AI tool&rdquo; articles are
-              thin, SEO-farmed, and quietly stuffed with affiliate links. I wanted the opposite: a
+              thin, SEO-farmed, and optimised for clicks over the truth. I wanted the opposite: a
               small number of deeply-tested reviews I&apos;d actually trust myself.
             </p>
           </section>
@@ -80,9 +80,11 @@ export default function AboutPage() {
           <section className={styles.section}>
             <h2 className={styles.h2}>How we stay independent</h2>
             <p className={styles.p}>
-              No affiliate links. No paid placements. No &ldquo;sponsored reviews.&rdquo; If that ever
-              changes, it will be disclosed clearly at the top of the affected page. The goal is simple:
-              you should be able to act on a verdict here without wondering what we got paid to say it.
+              Some posts use affiliate links — if you buy through one it helps support the site at no
+              extra cost to you, and it&apos;s always disclosed at the top of the page. What never
+              happens: paid placements, sponsored reviews, or a vendor changing a verdict. Affiliate
+              links only ever point to tools I already pay for and recommend. You should be able to act
+              on a verdict here without wondering what I got paid to say it.
             </p>
           </section>
 

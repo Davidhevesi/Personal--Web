@@ -1,9 +1,42 @@
 'use client'
 
 import { PortableText } from '@portabletext/react'
+import { ComparisonTable } from './ComparisonTable'
+import { VisualCanvas, VisualCanvasCard } from './VisualCanvas'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const components: any = {
+  types: {
+    // Inline data table (reuses the same component as the standalone field).
+    dataTable: ({ value }: { value: { headers?: string[]; rows?: { cells: string[] }[] } }) => (
+      <ComparisonTable headers={value.headers ?? []} rows={value.rows ?? []} />
+    ),
+    // Reusable visual board (frameworks / breakdowns / diagrams).
+    visualCanvas: ({
+      value,
+    }: {
+      value: {
+        variant?: 'blank' | 'diagram' | 'cards'
+        eyebrow?: string
+        title?: string
+        description?: string
+        columns?: { heading: string; items?: string[] }[]
+      }
+    }) => (
+      <VisualCanvas
+        variant={value.variant}
+        eyebrow={value.eyebrow}
+        title={value.title}
+        description={value.description}
+      >
+        {value.columns?.length
+          ? value.columns.map((col, i) => (
+              <VisualCanvasCard key={i} heading={col.heading} items={col.items} />
+            ))
+          : undefined}
+      </VisualCanvas>
+    ),
+  },
   block: {
     normal: ({ children }: { children?: React.ReactNode }) => <p>{children}</p>,
     h2: ({ children, value }: { children?: React.ReactNode; value: { _key?: string } }) => (

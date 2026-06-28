@@ -131,7 +131,7 @@ export function buildLlmsTxt(data: SitemapData): string {
   lines.push(
     `> Independent, hands-on reviews of AI assistants, coding tools, and writing apps. ` +
       `Every review is based on real usage, scored out of 10, with pros, cons, and a clear verdict. ` +
-      `No affiliate links.`,
+      `No paid placements or sponsored reviews; affiliate links are always disclosed.`,
   )
   lines.push('')
   lines.push('## Reviews')

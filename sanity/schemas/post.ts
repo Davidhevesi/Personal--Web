@@ -44,6 +44,40 @@ export const postSchema = defineType({
             fields: [{ name: 'href', type: 'url', title: 'URL' }],
           }],
         },
+      }, {
+        type: 'object',
+        name: 'visualCanvas',
+        title: 'Visual Canvas',
+        fields: [
+          { name: 'variant', type: 'string', title: 'Variant', options: { list: ['blank', 'diagram', 'cards'] }, initialValue: 'cards' },
+          { name: 'eyebrow', type: 'string', title: 'Eyebrow' },
+          { name: 'title', type: 'string', title: 'Title' },
+          { name: 'description', type: 'text', rows: 2, title: 'Description' },
+          {
+            name: 'columns', type: 'array', title: 'Columns (cards variant)',
+            of: [{
+              type: 'object', name: 'column',
+              fields: [
+                { name: 'heading', type: 'string', title: 'Heading' },
+                { name: 'items', type: 'array', of: [{ type: 'string' }], title: 'Items' },
+              ],
+              preview: { select: { title: 'heading' } },
+            }],
+          },
+        ],
+        preview: { select: { title: 'title', subtitle: 'variant' } },
+      }, {
+        type: 'object',
+        name: 'dataTable',
+        title: 'Table',
+        fields: [
+          { name: 'headers', type: 'array', of: [{ type: 'string' }], title: 'Column Headers' },
+          {
+            name: 'rows', type: 'array', title: 'Rows',
+            of: [{ type: 'object', name: 'row', fields: [{ name: 'cells', type: 'array', of: [{ type: 'string' }], title: 'Cells' }] }],
+          },
+        ],
+        preview: { select: { title: 'headers' }, prepare: ({ title }: { title?: string[] }) => ({ title: title?.join(' · ') ?? 'Table' }) },
       }],
       validation: (Rule) => Rule.required(),
     }),
