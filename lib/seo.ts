@@ -5,7 +5,7 @@
  */
 
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://hevesi.studio'
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://davidhevesi.com'
 ).replace(/\/$/, '')
 
 export const SITE_NAME = 'Hevesi Research'
@@ -25,7 +25,7 @@ export const SOCIAL_LINKS = ['https://github.com/Davidhevesi']
 
 export const TWITTER_HANDLE = '' // e.g. '@hevesiresearch' once it exists
 
-/** Build an absolute URL from a path ('/about' -> 'https://hevesi.studio/about'). */
+/** Build an absolute URL from a path ('/about' -> 'https://davidhevesi.com/about'). */
 export function absUrl(path = '/'): string {
   if (path.startsWith('http')) return path
   return `${SITE_URL}${path.startsWith('/') ? '' : '/'}${path}`

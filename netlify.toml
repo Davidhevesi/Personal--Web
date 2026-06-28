@@ -9,7 +9,7 @@
   # you later enable draft mode. The public dataset needs no token to read.
   NEXT_PUBLIC_SANITY_PROJECT_ID = "g22ypzt1"
   NEXT_PUBLIC_SANITY_DATASET = "production"
-  NEXT_PUBLIC_SITE_URL = "https://hevesi.studio"
+  NEXT_PUBLIC_SITE_URL = "https://davidhevesi.com"
 
 # Official Next.js runtime — handles SSR/ISR, route handlers, and asset caching.
 [[plugins]]
