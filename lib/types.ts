@@ -13,6 +13,8 @@ export type Post = {
   title: string
   slug: SanitySlug
   updatedAt: string
+  publishedAt?: string
+  author?: string
   category: CategoryRef
   tags?: string[]
   readingTimeMin?: number
@@ -20,6 +22,9 @@ export type Post = {
   verdictSummary?: string
   verdictLabel?: string
   verdictScore?: number
+  toolName?: string
+  toolWebsite?: string
+  priceUSD?: number
   body?: unknown[]
   comparisonTable?: ComparisonTableData
   pros?: string[]
@@ -51,6 +56,13 @@ export type SiteSettings = {
   newsletterHeadline?: string
   newsletterDescription?: string
   navLinks?: { label: string; href: string }[]
+  defaultAuthor?: string
+  social?: { twitter?: string; github?: string; linkedin?: string }
+}
+
+export type SitemapData = {
+  posts: { slug: string; lastmod: string; title: string; seoDescription?: string }[]
+  categories: { slug: string; lastmod: string; title: string }[]
 }
 
 export type HomepageData = {

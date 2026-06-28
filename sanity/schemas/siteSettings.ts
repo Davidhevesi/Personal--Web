@@ -22,5 +22,16 @@ export const siteSettingsSchema = defineType({
         ],
       }],
     }),
+    defineField({ name: 'defaultAuthor', title: 'Default Author', type: 'string', initialValue: 'David Hevesi' }),
+    defineField({
+      name: 'social',
+      title: 'Social Links',
+      type: 'object',
+      fields: [
+        { name: 'twitter', type: 'url', title: 'Twitter / X' },
+        { name: 'github', type: 'url', title: 'GitHub' },
+        { name: 'linkedin', type: 'url', title: 'LinkedIn' },
+      ],
+    }),
   ],
 })

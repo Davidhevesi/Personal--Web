@@ -10,9 +10,12 @@ import { ProsConsList } from '@/components/ProsConsList'
 import { FAQAccordion } from '@/components/FAQAccordion'
 import { NewsletterSignup } from '@/components/NewsletterSignup'
 import { PortableTextRenderer } from '@/components/PortableTextRenderer'
+import { JsonLd } from '@/components/JsonLd'
 import { sanityClient } from '@/lib/sanity'
 import { postQuery, allPostSlugsQuery } from '@/lib/queries'
 import { formatMonthYear } from '@/lib/format'
+import { absUrl, AUTHOR } from '@/lib/seo'
+import { buildPostJsonLd } from '@/lib/structured-data'
 import type { Post } from '@/lib/types'
 import styles from './page.module.css'
 
@@ -43,11 +46,24 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
   const post = await sanityClient.fetch<Post | null>(postQuery, { slug })
-  if (!post) return { title: 'Article Not Found' }
+  if (!post) return { title: 'Article Not Found', robots: { index: false, follow: false } }
+  const canonical = `/${slug}`
   return {
     title: post.title,
     description: post.seoDescription,
-    alternates: { canonical: `https://hevesi.studio/${slug}` },
+    alternates: { canonical },
+    openGraph: {
+      type: 'article',
+      url: canonical,
+      title: post.title,
+      description: post.seoDescription,
+      publishedTime: post.publishedAt ?? post.updatedAt,
+      modifiedTime: post.updatedAt,
+      authors: [post.author ?? AUTHOR.name],
+      section: post.category?.title,
+      tags: post.tags,
+    },
+    twitter: { title: post.title, description: post.seoDescription },
   }
 }
 
@@ -59,20 +75,9 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
   const headings = getHeadings(post.body)
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: post.title,
-    dateModified: post.updatedAt,
-    author: { '@type': 'Person', name: 'David Hevesi' },
-  }
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <JsonLd data={buildPostJsonLd(post)} />
       <SiteNav />
       <main>
         <div className={styles.container}>

@@ -8,6 +8,7 @@ const NAV_LINKS = [
   { label: 'AI Assistants', href: '/category/ai-assistants' },
   { label: 'Coding Tools', href: '/category/coding-tools' },
   { label: 'Writing Tools', href: '/category/writing-tools' },
+  { label: 'About', href: '/about' },
 ]
 
 export function SiteNav() {

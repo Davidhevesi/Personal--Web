@@ -11,10 +11,11 @@ export const homepageQuery = `{
 
 export const postQuery = `
   *[_type == "post" && slug.current == $slug][0]{
-    title, slug, updatedAt, readingTimeMin,
+    title, slug, updatedAt, publishedAt, author, readingTimeMin,
     category->{title, slug},
     tags, seoDescription,
     verdictSummary, verdictLabel, verdictScore,
+    toolName, toolWebsite, priceUSD,
     body,
     comparisonTable, pros, cons, faq, featured
   }
@@ -30,3 +31,9 @@ export const categoryPageQuery = `{
 
 export const allPostSlugsQuery = `*[_type == "post"]{ "slug": slug.current }`
 export const allCategorySlugsQuery = `*[_type == "category"]{ "slug": slug.current }`
+
+/** For sitemap + llms.txt: every post/category with lastmod + label. */
+export const sitemapQuery = `{
+  "posts": *[_type == "post" && defined(slug.current)]{ "slug": slug.current, "lastmod": coalesce(updatedAt, publishedAt, _updatedAt), title, seoDescription } | order(lastmod desc),
+  "categories": *[_type == "category" && defined(slug.current)]{ "slug": slug.current, "lastmod": _updatedAt, title }
+}`

@@ -7,7 +7,9 @@ export const postSchema = defineType({
   fields: [
     defineField({ name: 'title', title: 'Title', type: 'string', validation: (Rule) => Rule.required() }),
     defineField({ name: 'slug', title: 'Slug', type: 'slug', options: { source: 'title', maxLength: 96 }, validation: (Rule) => Rule.required() }),
+    defineField({ name: 'publishedAt', title: 'First Published', type: 'datetime', validation: (Rule) => Rule.required() }),
     defineField({ name: 'updatedAt', title: 'Last Updated', type: 'datetime', validation: (Rule) => Rule.required() }),
+    defineField({ name: 'author', title: 'Author', type: 'string', initialValue: 'David Hevesi' }),
     defineField({ name: 'category', title: 'Category', type: 'reference', to: [{ type: 'category' }], validation: (Rule) => Rule.required() }),
     defineField({ name: 'tags', title: 'Tags', type: 'array', of: [{ type: 'string' }] }),
     defineField({ name: 'readingTimeMin', title: 'Reading Time (minutes)', type: 'number' }),
@@ -15,6 +17,9 @@ export const postSchema = defineType({
     defineField({ name: 'verdictSummary', title: 'Verdict Summary', type: 'text', rows: 4 }),
     defineField({ name: 'verdictLabel', title: 'Verdict Label', type: 'string', description: 'e.g. "Worth it for most users"' }),
     defineField({ name: 'verdictScore', title: 'Verdict Score (1–10)', type: 'number', validation: (Rule) => Rule.min(1).max(10) }),
+    defineField({ name: 'toolName', title: 'Tool Name (for Review schema)', type: 'string', description: 'The product being reviewed, e.g. "Claude Pro". Powers rich-result rating stars.' }),
+    defineField({ name: 'toolWebsite', title: 'Tool Website', type: 'url' }),
+    defineField({ name: 'priceUSD', title: 'Price (USD / month)', type: 'number', description: 'Optional — adds an Offer to the review schema.' }),
     defineField({
       name: 'body',
       title: 'Body',

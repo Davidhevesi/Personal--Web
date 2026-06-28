@@ -5,9 +5,12 @@ import { SiteFooter } from '@/components/SiteFooter'
 import { ArticleRow } from '@/components/ArticleRow'
 import { CategoryChip } from '@/components/CategoryChip'
 import { NewsletterSignup } from '@/components/NewsletterSignup'
+import { JsonLd } from '@/components/JsonLd'
 import { sanityClient } from '@/lib/sanity'
 import { categoryPageQuery, allCategorySlugsQuery } from '@/lib/queries'
 import { toArticleRowProps } from '@/lib/format'
+import { buildCategoryJsonLd } from '@/lib/structured-data'
+import { SITE_NAME } from '@/lib/seo'
 import type { Category, PostSummary } from '@/lib/types'
 import styles from './page.module.css'
 
@@ -27,11 +30,17 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
   const data = await sanityClient.fetch<CategoryPageData>(categoryPageQuery, { slug })
-  if (!data.category) return { title: 'Category Not Found' }
+  if (!data.category) return { title: 'Category Not Found', robots: { index: false, follow: false } }
+  const canonical = `/category/${slug}`
+  const title = `${data.category.title} Reviews`
+  const description =
+    data.category.description ?? `Independent ${data.category.title} reviews from ${SITE_NAME}.`
   return {
-    title: `${data.category.title} Reviews`,
-    description: data.category.description,
-    alternates: { canonical: `https://hevesi.studio/category/${slug}` },
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: { type: 'website', url: canonical, title, description },
+    twitter: { title, description },
   }
 }
 
@@ -45,6 +54,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
 
   return (
     <>
+      <JsonLd data={buildCategoryJsonLd(category, posts)} />
       <SiteNav />
       <main>
         <div className={styles.container}>

@@ -10,29 +10,16 @@ import { sanityClient } from '@/lib/sanity'
 import { homepageQuery } from '@/lib/queries'
 import { toArticleRowProps } from '@/lib/format'
 import type { HomepageData } from '@/lib/types'
+import { SITE_NAME, SITE_DESCRIPTION } from '@/lib/seo'
 import styles from './page.module.css'
 
 export const revalidate = 60
 
 export const metadata: Metadata = {
-  title: 'AI Tools Review — Honest Reviews of AI Tools',
-  description: 'Independent, in-depth reviews of AI writing, coding, and productivity tools.',
-  alternates: { canonical: 'https://hevesi.studio' },
-}
-
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: 'AI Tools Review',
-  url: 'https://hevesi.studio',
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: {
-      '@type': 'EntryPoint',
-      urlTemplate: 'https://hevesi.studio/?q={search_term_string}',
-    },
-    'query-input': 'required name=search_term_string',
-  },
+  title: `${SITE_NAME} — Honest, independent AI tool reviews`,
+  description: SITE_DESCRIPTION,
+  alternates: { canonical: '/' },
+  openGraph: { url: '/', title: `${SITE_NAME} — Honest, independent AI tool reviews`, description: SITE_DESCRIPTION },
 }
 
 export default async function HomePage() {
@@ -44,10 +31,6 @@ export default async function HomePage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
       <SiteNav />
       <main>
         {/* Hero */}
