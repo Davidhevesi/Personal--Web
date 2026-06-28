@@ -20,15 +20,20 @@ export function SiteNav() {
           Hevesi Research
         </Link>
 
-        <ul className={styles.links}>
-          {NAV_LINKS.map((l) => (
-            <li key={l.href}>
-              <Link href={l.href} className={styles.link}>
-                {l.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <div className={styles.right}>
+          <ul className={styles.links}>
+            {NAV_LINKS.map((l) => (
+              <li key={l.href}>
+                <Link href={l.href} className={styles.link}>
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <Link href="/#newsletter" className={styles.subscribe}>
+            Subscribe
+          </Link>
+        </div>
 
         <button
           className={styles.hamburger}
@@ -68,6 +73,13 @@ export function SiteNav() {
               </li>
             ))}
           </ul>
+          <Link
+            href="/#newsletter"
+            className={styles.dialogSubscribe}
+            onClick={() => dialogRef.current?.close()}
+          >
+            Subscribe
+          </Link>
         </div>
       </dialog>
     </nav>

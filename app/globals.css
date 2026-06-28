@@ -1,21 +1,27 @@
 :root {
-  --bg:            oklch(97.5% 0.007 78);
-  --bg-subtle:     oklch(93.5% 0.010 74);
-  --bg-inset:      oklch(90%   0.012 74);
-  --text:          oklch(17%  0.018 68);
-  --text-mid:      oklch(42%  0.018 68);
-  --text-muted:    oklch(60%  0.012 68);
-  --accent:        oklch(38%  0.082 192);
-  --accent-mid:    oklch(55%  0.055 192);
-  --accent-bg:     oklch(95%  0.025 192);
-  --warn:          oklch(58%  0.13  55);
-  --warn-bg:       oklch(96%  0.025 78);
-  --border:        oklch(86%  0.010 74);
-  --border-strong: oklch(75%  0.015 74);
+  --bg:            oklch(99.2% 0.001 250);
+  --bg-subtle:     oklch(96.8% 0.002 250);
+  --bg-inset:      oklch(94%   0.003 250);
+  --text:          oklch(14%  0.012 260);
+  --text-mid:      oklch(40%  0.012 260);
+  --text-muted:    oklch(56%  0.008 260);
+  --accent:        oklch(46%  0.12  194);
+  --accent-mid:    oklch(54%  0.10  194);
+  --accent-bg:     oklch(95%  0.03  194);
+  --warn:          oklch(56%  0.14  48);
+  --warn-bg:       oklch(96%  0.03  70);
+  --border:        oklch(90%  0.004 250);
+  --border-strong: oklch(80%  0.006 250);
 
-  --font-serif: var(--font-serif-var), 'Georgia', serif;
-  --font-sans:  var(--font-sans-var),  'Helvetica Neue', sans-serif;
-  --font-mono:  var(--font-mono-var),  'Courier New', monospace;
+  /* Near-black "ink" for high-contrast primary buttons */
+  --ink:           oklch(14%  0.012 260);
+  --ink-hover:     oklch(24%  0.012 260);
+  --on-ink:        oklch(99%  0.001 250);
+
+  --font-display: var(--font-display-var), 'Helvetica Neue', sans-serif;
+  --font-serif:   var(--font-display-var), 'Helvetica Neue', sans-serif;
+  --font-sans:    var(--font-sans-var),    'Helvetica Neue', sans-serif;
+  --font-mono:    var(--font-mono-var),    'Courier New', monospace;
 
   --max-w: 1160px;
   --px-desktop: 48px;
@@ -59,10 +65,11 @@ a {
 .prose p { margin-bottom: 1em; }
 
 .prose h2 {
-  font-family: var(--font-serif);
-  font-size: 26px;
-  font-weight: 500;
-  line-height: 1.3;
+  font-family: var(--font-display);
+  font-size: 27px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
   color: var(--text);
   margin: 2em 0 0.75em;
 }

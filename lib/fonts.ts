@@ -1,10 +1,9 @@
-import { Lora, IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google'
+import { Space_Grotesk, IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google'
 
-export const lora = Lora({
+export const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
-  weight: ['400', '500', '600'],
-  style: ['normal', 'italic'],
-  variable: '--font-serif-var',
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-display-var',
   display: 'swap',
 })
 

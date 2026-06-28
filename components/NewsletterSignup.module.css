@@ -14,19 +14,21 @@
 }
 
 .headlineFull {
-  font-family: var(--font-serif);
-  font-size: 30px;
-  font-weight: 400;
-  line-height: 1.2;
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
   color: var(--text);
   margin-bottom: 12px;
 }
 
 .headlineInline {
-  font-family: var(--font-serif);
-  font-size: 22px;
-  font-weight: 400;
-  line-height: 1.2;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
   color: var(--text);
   margin-bottom: 10px;
 }
@@ -72,19 +74,19 @@
 .button {
   height: 44px;
   padding: 0 24px;
-  background: var(--accent);
-  color: oklch(97% 0.005 192);
+  background: var(--ink);
+  color: var(--on-ink);
   font-family: var(--font-sans);
   font-size: 14px;
-  font-weight: 600;
-  border: none;
-  border-radius: 4px;
+  font-weight: 500;
+  border: 1px solid var(--ink);
+  border-radius: 3px;
   cursor: pointer;
   white-space: nowrap;
-  transition: opacity 0.15s;
+  transition: background 0.15s, border-color 0.15s;
 }
 
-.button:hover { opacity: 0.88; }
+.button:hover { background: var(--ink-hover); border-color: var(--ink-hover); }
 
 @media (max-width: 640px) {
   .sectionFull { padding: 64px var(--px-mobile); }

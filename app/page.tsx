@@ -5,6 +5,7 @@ import { SiteFooter } from '@/components/SiteFooter'
 import { ArticleRow } from '@/components/ArticleRow'
 import { CategoryChip } from '@/components/CategoryChip'
 import { NewsletterSignup } from '@/components/NewsletterSignup'
+import { Button } from '@/components/Button'
 import { sanityClient } from '@/lib/sanity'
 import { homepageQuery } from '@/lib/queries'
 import { toArticleRowProps } from '@/lib/format'
@@ -39,6 +40,7 @@ export default async function HomePage() {
   const featured = data.featured
   const latest = data.latest ?? []
   const categories = data.categories ?? []
+  const reviewCount = data.reviewCount ?? latest.length
 
   return (
     <>
@@ -51,10 +53,41 @@ export default async function HomePage() {
         {/* Hero */}
         <section className={styles.hero}>
           <div className={styles.inner}>
-            <p className={styles.tagline}>
-              Honest reviews of AI tools that actually matter.
+            <h1 className={styles.headline}>
+              Honest reviews of<br />the AI tools you use.
+            </h1>
+            <p className={styles.subhead}>
+              Independent, hands-on testing of AI assistants, coding tools, and writing apps —
+              so you know what&apos;s worth paying for before you spend a cent.
             </p>
-            {featured && (
+            <div className={styles.ctaRow}>
+              <Button href="#latest" variant="primary" arrow>Browse reviews</Button>
+              <Button href="#newsletter" variant="secondary">Subscribe</Button>
+            </div>
+
+            {/* Honest, content-derived stats — no traffic claims */}
+            <dl className={styles.stats}>
+              <div className={styles.stat}>
+                <dt className={styles.statNum}>{reviewCount}</dt>
+                <dd className={styles.statLabel}>in-depth reviews</dd>
+              </div>
+              <div className={styles.stat}>
+                <dt className={styles.statNum}>{categories.length}</dt>
+                <dd className={styles.statLabel}>categories</dd>
+              </div>
+              <div className={styles.stat}>
+                <dt className={styles.statNum}>0</dt>
+                <dd className={styles.statLabel}>affiliate links</dd>
+              </div>
+            </dl>
+          </div>
+        </section>
+
+        {/* Featured */}
+        {featured && (
+          <section className={styles.featuredSection}>
+            <div className={styles.inner}>
+              <p className={styles.kicker}>Featured</p>
               <div className={styles.featuredBlock}>
                 <Link href={`/category/${featured.category?.slug?.current ?? ''}`} className={styles.featuredCategory}>
                   {featured.category?.title}
@@ -65,17 +98,19 @@ export default async function HomePage() {
                 <p className={styles.featuredDeck}>{featured.seoDescription}</p>
                 <span className={styles.featuredMeta}>{featured.readingTimeMin ?? 5} min read</span>
               </div>
-            )}
-          </div>
-        </section>
+            </div>
+          </section>
+        )}
 
         {/* Latest Articles */}
-        <section className={styles.section}>
+        <section id="latest" className={styles.section}>
           <div className={styles.inner}>
-            <h2 className={styles.sectionHeading}>Latest Articles</h2>
-            {latest.map((article) => (
-              <ArticleRow key={article.slug.current} {...toArticleRowProps(article)} />
-            ))}
+            <h2 className={styles.sectionHeading}>Latest reviews</h2>
+            <div className={styles.list}>
+              {latest.map((article, i) => (
+                <ArticleRow key={article.slug.current} index={i + 1} {...toArticleRowProps(article)} />
+              ))}
+            </div>
           </div>
         </section>
 
@@ -91,7 +126,9 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <NewsletterSignup size="full" />
+        <div id="newsletter">
+          <NewsletterSignup size="full" />
+        </div>
       </main>
       <SiteFooter />
     </>

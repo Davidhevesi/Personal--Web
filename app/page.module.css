@@ -1,27 +1,94 @@
-.hero {
-  padding: 80px 0 72px;
-  border-bottom: 1px solid var(--border);
-}
-
 .inner {
   max-width: var(--max-w);
   margin: 0 auto;
   padding: 0 var(--px-desktop);
 }
 
-.tagline {
-  font-family: var(--font-serif);
-  font-size: 48px;
-  font-weight: 400;
-  line-height: 1.15;
+/* ── Hero ── */
+.hero {
+  padding: 96px 0 56px;
+}
+
+.headline {
+  font-family: var(--font-display);
+  font-size: 60px;
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
   color: var(--text);
-  max-width: 640px;
-  margin-bottom: 48px;
+  max-width: 880px;
+}
+
+.subhead {
+  font-family: var(--font-sans);
+  font-size: 19px;
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--text-mid);
+  max-width: 560px;
+  margin-top: 24px;
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+/* ── Stats strip ── */
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 56px;
+  margin-top: 64px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.statNum {
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.statLabel {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 10px;
+}
+
+/* ── Featured ── */
+.featuredSection {
+  padding: 24px 0 0;
+}
+
+.kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
 }
 
 .featuredBlock {
-  padding-top: 32px;
-  border-top: 1px solid var(--border);
+  padding: 28px 0 36px;
+  border-top: 2px solid var(--text);
+  border-bottom: 1px solid var(--border);
 }
 
 .featuredCategory {
@@ -33,49 +100,59 @@
   color: var(--accent);
   text-decoration: none;
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .featuredTitle {
-  font-family: var(--font-serif);
-  font-size: 28px;
-  font-weight: 500;
-  line-height: 1.25;
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.12;
   color: var(--text);
   text-decoration: none;
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   transition: color 0.15s;
+  max-width: 720px;
 }
 
 .featuredTitle:hover { color: var(--accent-mid); }
 
 .featuredDeck {
   font-family: var(--font-sans);
-  font-size: 16px;
-  line-height: 1.5;
+  font-size: 17px;
+  line-height: 1.55;
   color: var(--text-mid);
+  max-width: 620px;
 }
 
 .featuredMeta {
-  font-family: var(--font-sans);
-  font-size: 13px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.02em;
   color: var(--text-muted);
   display: block;
-  margin-top: 8px;
+  margin-top: 14px;
 }
 
+/* ── Sections ── */
 .section {
-  padding: 96px 0;
+  padding: 80px 0;
 }
 
 .sectionHeading {
-  font-family: var(--font-serif);
-  font-size: 22px;
-  font-weight: 500;
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
   color: var(--text);
-  margin-bottom: 0;
-  padding-bottom: 0;
+  margin-bottom: 12px;
+}
+
+.list {
+  margin-top: 8px;
+  border-top: 1px solid var(--border);
 }
 
 .browseLabel {
@@ -85,7 +162,7 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-muted);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .chips {
@@ -96,8 +173,11 @@
 
 @media (max-width: 640px) {
   .inner { padding: 0 var(--px-mobile); }
-  .tagline { font-size: 32px; }
-  .featuredTitle { font-size: 22px; }
-  .hero { padding: 48px 0 40px; }
-  .section { padding: 64px 0; }
+  .hero { padding: 56px 0 40px; }
+  .headline { font-size: 38px; letter-spacing: -0.025em; }
+  .subhead { font-size: 17px; margin-top: 20px; }
+  .stats { gap: 32px; margin-top: 44px; }
+  .statNum { font-size: 32px; }
+  .featuredTitle { font-size: 26px; }
+  .section { padding: 56px 0; }
 }

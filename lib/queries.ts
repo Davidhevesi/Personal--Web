@@ -5,7 +5,8 @@ export const homepageQuery = `{
   "latest": *[_type == "post"] | order(updatedAt desc)[0...12]{
     title, slug, category->{title,slug}, seoDescription, updatedAt, readingTimeMin
   },
-  "categories": *[_type == "category"] | order(sortOrder asc){ title, slug }
+  "categories": *[_type == "category"] | order(sortOrder asc){ title, slug },
+  "reviewCount": count(*[_type == "post"])
 }`
 
 export const postQuery = `

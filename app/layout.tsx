@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { lora, ibmPlexSans, ibmPlexMono } from '@/lib/fonts'
+import { spaceGrotesk, ibmPlexSans, ibmPlexMono } from '@/lib/fonts'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${lora.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable}`}
+      className={`${spaceGrotesk.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable}`}
     >
       <body>{children}</body>
     </html>

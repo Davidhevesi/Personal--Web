@@ -57,4 +57,5 @@ export type HomepageData = {
   featured: PostSummary | null
   latest: PostSummary[]
   categories: Pick<Category, 'title' | 'slug'>[]
+  reviewCount: number
 }

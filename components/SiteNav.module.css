@@ -18,20 +18,41 @@
 }
 
 .logo {
-  font-family: var(--font-sans);
-  font-size: 15px;
+  font-family: var(--font-display);
+  font-size: 17px;
   font-weight: 600;
   color: var(--text);
   text-decoration: none;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 28px;
 }
 
 .links {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 28px;
   list-style: none;
 }
+
+.subscribe {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--on-ink);
+  background: var(--ink);
+  border: 1px solid var(--ink);
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 3px;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.subscribe:hover { background: var(--ink-hover); border-color: var(--ink-hover); }
 
 .link {
   font-family: var(--font-sans);
@@ -113,12 +134,26 @@
   border-bottom: 1px solid var(--border);
 }
 
+.dialogSubscribe {
+  display: inline-flex;
+  margin-top: 24px;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--on-ink);
+  background: var(--ink);
+  border: 1px solid var(--ink);
+  text-decoration: none;
+  padding: 12px 22px;
+  border-radius: 3px;
+}
+
 @media (max-width: 640px) {
   .inner {
     padding: 0 var(--px-mobile);
   }
 
-  .links {
+  .right {
     display: none;
   }
 
