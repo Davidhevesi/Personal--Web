@@ -1,54 +1,46 @@
 /**
  * Central SEO / site identity config. Single source of truth for the canonical
- * domain, brand, author, and structured-data entities. Everything that needs a
- * URL or brand fact imports from here so nothing is hardcoded.
+ * domain, name, contact details, and structured-data entities. Everything that
+ * needs a URL or identity fact imports from here so nothing is hardcoded.
  */
 
 export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ?? 'https://davidhevesi.com'
 ).replace(/\/$/, '')
 
-export const SITE_NAME = 'Hevesi Research'
+export const SITE_NAME = 'David Hevesi'
+
+export const SITE_TAGLINE = 'Paid social and growth marketing'
 
 export const SITE_DESCRIPTION =
-  'Independent, hands-on reviews of AI assistants, coding tools, and writing apps — so you know what is worth paying for before you spend a cent.'
+  'Paid social case studies from David Hevesi: from one boosted Instagram reel to a full Meta campaign that cut cost per qualified lead in half.'
 
 export const SITE_LOCALE = 'en_US'
 
-export const AUTHOR = {
-  name: 'David Hevesi',
-  url: `${SITE_URL}/about`,
-}
+export const CONTACT_EMAIL = 'davidhevesi@protonmail.com'
 
-/** Public profiles used for Organization/Person `sameAs`. Keep only real ones. */
-export const SOCIAL_LINKS = ['https://github.com/Davidhevesi']
+export const LINKEDIN_URL = 'https://linkedin.com/in/davidhevesi'
 
-export const TWITTER_HANDLE = '' // e.g. '@hevesiresearch' once it exists
+export const GITHUB_URL = 'https://github.com/Davidhevesi'
 
-/** Build an absolute URL from a path ('/about' -> 'https://davidhevesi.com/about'). */
+/** Public profiles used for Person `sameAs`. Keep only real ones. */
+export const SOCIAL_LINKS = [LINKEDIN_URL, GITHUB_URL]
+
+export const TWITTER_HANDLE = '' // e.g. '@davidhevesi' once it exists
+
+/** Build an absolute URL from a path ('/work' -> 'https://davidhevesi.com/work'). */
 export function absUrl(path = '/'): string {
   if (path.startsWith('http')) return path
   return `${SITE_URL}${path.startsWith('/') ? '' : '/'}${path}`
 }
 
-/** Organization entity reused across JSON-LD graphs. */
-export const ORGANIZATION = {
-  '@type': 'Organization',
-  '@id': `${SITE_URL}/#organization`,
-  name: SITE_NAME,
-  url: SITE_URL,
-  logo: {
-    '@type': 'ImageObject',
-    url: absUrl('/icon'),
-  },
-  sameAs: SOCIAL_LINKS,
-} as const
-
-/** Person entity (the author) reused across JSON-LD graphs. */
+/** Person entity reused across JSON-LD graphs. */
 export const PERSON = {
   '@type': 'Person',
   '@id': `${SITE_URL}/#person`,
-  name: AUTHOR.name,
-  url: AUTHOR.url,
+  name: SITE_NAME,
+  url: SITE_URL,
+  jobTitle: SITE_TAGLINE,
+  email: `mailto:${CONTACT_EMAIL}`,
   sameAs: SOCIAL_LINKS,
 } as const

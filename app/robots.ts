@@ -3,13 +3,7 @@ import { SITE_URL, absUrl } from '@/lib/seo'
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: [
-      {
-        userAgent: '*',
-        allow: '/',
-        disallow: ['/studio', '/studio/'],
-      },
-    ],
+    rules: [{ userAgent: '*', allow: '/' }],
     sitemap: absUrl('/sitemap.xml'),
     host: SITE_URL,
   }

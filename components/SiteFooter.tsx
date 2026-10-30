@@ -1,11 +1,12 @@
 import Link from 'next/link'
+import { SITE_NAME, SITE_TAGLINE, CONTACT_EMAIL, LINKEDIN_URL, GITHUB_URL } from '@/lib/seo'
 import styles from './SiteFooter.module.css'
 
 const FOOTER_LINKS = [
-  { label: 'AI Assistants', href: '/category/ai-assistants' },
-  { label: 'Coding Tools', href: '/category/coding-tools' },
-  { label: 'Writing Tools', href: '/category/writing-tools' },
-  { label: 'About', href: '/about' },
+  { label: 'Case studies', href: '/#case-studies' },
+  { label: 'LinkedIn', href: LINKEDIN_URL },
+  { label: 'GitHub', href: GITHUB_URL },
+  { label: 'Email', href: `mailto:${CONTACT_EMAIL}` },
 ]
 
 export function SiteFooter() {
@@ -13,16 +14,16 @@ export function SiteFooter() {
     <footer className={styles.footer}>
       <div className={styles.inner}>
         <div className={styles.top}>
-          <Link href="/" className={styles.name}>Hevesi Research</Link>
+          <Link href="/" className={styles.name}>{SITE_NAME}</Link>
           <ul className={styles.links}>
             {FOOTER_LINKS.map((l) => (
               <li key={l.href}>
-                <Link href={l.href} className={styles.link}>{l.label}</Link>
+                <a href={l.href} className={styles.link}>{l.label}</a>
               </li>
             ))}
           </ul>
         </div>
-        <p className={styles.copy}>© 2026 Hevesi Research. Independent AI tool reviews.</p>
+        <p className={styles.copy}>© {new Date().getFullYear()} {SITE_NAME}. {SITE_TAGLINE}.</p>
       </div>
     </footer>
   )

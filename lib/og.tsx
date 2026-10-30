@@ -1,5 +1,5 @@
 import { ImageResponse } from 'next/og'
-import { SITE_NAME } from '@/lib/seo'
+import { SITE_NAME, SITE_TAGLINE } from '@/lib/seo'
 
 export const OG_SIZE = { width: 1200, height: 630 }
 export const OG_CONTENT_TYPE = 'image/png'
@@ -9,16 +9,8 @@ const INK = '#141517'
 const MUTED = '#6b6f76'
 const ACCENT = '#0f6e74'
 
-/** Shared 1200x630 OG/Twitter card used by home + post routes. */
-export function renderOgImage({
-  title,
-  eyebrow,
-  score,
-}: {
-  title: string
-  eyebrow?: string
-  score?: number
-}) {
+/** Shared 1200x630 OG/Twitter card. */
+export function renderOgImage({ title, eyebrow }: { title: string; eyebrow?: string }) {
   return new ImageResponse(
     (
       <div
@@ -84,16 +76,8 @@ export function renderOgImage({
           </div>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ fontSize: 24, color: MUTED }}>
-            Independent, hands-on AI tool reviews
-          </div>
-          {typeof score === 'number' ? (
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, color: ACCENT }}>
-              <span style={{ fontSize: 56, fontWeight: 700, letterSpacing: '-0.02em' }}>{score}</span>
-              <span style={{ fontSize: 28, fontWeight: 600, color: MUTED }}>/10</span>
-            </div>
-          ) : null}
+        <div style={{ display: 'flex', fontSize: 24, color: MUTED }}>
+          {SITE_TAGLINE}
         </div>
       </div>
     ),

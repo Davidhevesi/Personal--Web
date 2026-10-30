@@ -4,11 +4,6 @@
 
 [build.environment]
   NODE_VERSION = "20"
-  # Public Sanity config (safe to commit — NEXT_PUBLIC_* and a public dataset).
-  # The read token is NOT here; set SANITY_API_READ_TOKEN in the Netlify UI only if
-  # you later enable draft mode. The public dataset needs no token to read.
-  NEXT_PUBLIC_SANITY_PROJECT_ID = "g22ypzt1"
-  NEXT_PUBLIC_SANITY_DATASET = "production"
   NEXT_PUBLIC_SITE_URL = "https://davidhevesi.com"
 
 # Official Next.js runtime — handles SSR/ISR, route handlers, and asset caching.

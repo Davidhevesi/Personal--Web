@@ -6,14 +6,30 @@ interface ButtonProps {
   children: React.ReactNode
   variant?: 'primary' | 'secondary'
   arrow?: boolean
+  /** Opens in a new tab. Use for links that leave the site. */
+  external?: boolean
 }
 
-export function Button({ href, children, variant = 'primary', arrow = false }: ButtonProps) {
+export function Button({ href, children, variant = 'primary', arrow = false, external = false }: ButtonProps) {
   const className = `${styles.btn} ${variant === 'primary' ? styles.primary : styles.secondary}`
-  return (
-    <Link href={href} className={className}>
+  const content = (
+    <>
       {children}
       {arrow && <span className={styles.arrow} aria-hidden="true">→</span>}
-    </Link>
+    </>
   )
+
+  if (external || href.startsWith('mailto:')) {
+    return (
+      <a
+        href={href}
+        className={className}
+        {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      >
+        {content}
+      </a>
+    )
+  }
+
+  return <Link href={href} className={className}>{content}</Link>
 }

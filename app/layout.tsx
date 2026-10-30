@@ -1,32 +1,33 @@
 import type { Metadata } from 'next'
 import { spaceGrotesk, ibmPlexSans, ibmPlexMono } from '@/lib/fonts'
 import { JsonLd } from '@/components/JsonLd'
-import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, SITE_LOCALE, AUTHOR, ORGANIZATION, TWITTER_HANDLE } from '@/lib/seo'
+import { SITE_URL, SITE_NAME, SITE_TAGLINE, SITE_DESCRIPTION, SITE_LOCALE, PERSON, TWITTER_HANDLE } from '@/lib/seo'
 import './globals.css'
+
+const defaultTitle = `${SITE_NAME} — ${SITE_TAGLINE}`
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} — Honest, independent AI tool reviews`,
+    default: defaultTitle,
     template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
-  authors: [{ name: AUTHOR.name, url: AUTHOR.url }],
-  creator: AUTHOR.name,
-  publisher: SITE_NAME,
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
     siteName: SITE_NAME,
     locale: SITE_LOCALE,
     url: SITE_URL,
-    title: `${SITE_NAME} — Honest, independent AI tool reviews`,
+    title: defaultTitle,
     description: SITE_DESCRIPTION,
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${SITE_NAME} — Honest, independent AI tool reviews`,
+    title: defaultTitle,
     description: SITE_DESCRIPTION,
     ...(TWITTER_HANDLE ? { creator: TWITTER_HANDLE, site: TWITTER_HANDLE } : {}),
   },
@@ -40,20 +41,15 @@ export const metadata: Metadata = {
 const websiteJsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
-    ORGANIZATION,
+    PERSON,
     {
       '@type': 'WebSite',
       '@id': `${SITE_URL}/#website`,
       name: SITE_NAME,
       url: SITE_URL,
       description: SITE_DESCRIPTION,
-      publisher: { '@id': `${SITE_URL}/#organization` },
+      author: { '@id': `${SITE_URL}/#person` },
       inLanguage: 'en',
-      potentialAction: {
-        '@type': 'SearchAction',
-        target: { '@type': 'EntryPoint', urlTemplate: `${SITE_URL}/?q={search_term_string}` },
-        'query-input': 'required name=search_term_string',
-      },
     },
   ],
 }

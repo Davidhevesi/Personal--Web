@@ -2,13 +2,14 @@
 
 import Link from 'next/link'
 import { useRef } from 'react'
+import { SITE_NAME, CONTACT_EMAIL, LINKEDIN_URL } from '@/lib/seo'
 import styles from './SiteNav.module.css'
 
 const NAV_LINKS = [
-  { label: 'AI Assistants', href: '/category/ai-assistants' },
-  { label: 'Coding Tools', href: '/category/coding-tools' },
-  { label: 'Writing Tools', href: '/category/writing-tools' },
-  { label: 'About', href: '/about' },
+  { label: 'Case studies', href: '/#case-studies' },
+  { label: 'Tools', href: '/#tools' },
+  { label: 'About', href: '/#about' },
+  { label: 'LinkedIn', href: LINKEDIN_URL },
 ]
 
 export function SiteNav() {
@@ -18,7 +19,7 @@ export function SiteNav() {
     <nav className={styles.nav}>
       <div className={styles.inner}>
         <Link href="/" className={styles.logo}>
-          Hevesi Research
+          {SITE_NAME}
         </Link>
 
         <div className={styles.right}>
@@ -31,9 +32,9 @@ export function SiteNav() {
               </li>
             ))}
           </ul>
-          <Link href="/#newsletter" className={styles.subscribe}>
-            Subscribe
-          </Link>
+          <a href={`mailto:${CONTACT_EMAIL}`} className={styles.subscribe}>
+            Get in touch
+          </a>
         </div>
 
         <button
@@ -51,7 +52,7 @@ export function SiteNav() {
         <div className={styles.dialogInner}>
           <div className={styles.dialogHeader}>
             <Link href="/" className={styles.logo} onClick={() => dialogRef.current?.close()}>
-              Hevesi Research
+              {SITE_NAME}
             </Link>
             <button
               className={styles.dialogClose}
@@ -74,13 +75,9 @@ export function SiteNav() {
               </li>
             ))}
           </ul>
-          <Link
-            href="/#newsletter"
-            className={styles.dialogSubscribe}
-            onClick={() => dialogRef.current?.close()}
-          >
-            Subscribe
-          </Link>
+          <a href={`mailto:${CONTACT_EMAIL}`} className={styles.dialogSubscribe}>
+            Get in touch
+          </a>
         </div>
       </dialog>
     </nav>
