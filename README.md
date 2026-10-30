@@ -13,4 +13,4 @@ npm run dev
 
 All case study content lives in `lib/case-studies.ts`. Each entry becomes a card on the homepage and a page at `/work/<slug>`. Add an entry to `CASE_STUDIES` and it shows up in the sitemap and gets its own preview image too.
 
-Contact: davidhevesi@protonmail.com · [LinkedIn](https://linkedin.com/in/davidhevesi)
+Contact: davidhevesi@protonmail.com · [LinkedIn](https://www.linkedin.com/in/dhevesi/)

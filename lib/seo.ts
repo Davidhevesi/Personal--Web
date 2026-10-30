@@ -19,7 +19,7 @@ export const SITE_LOCALE = 'en_US'
 
 export const CONTACT_EMAIL = 'davidhevesi@protonmail.com'
 
-export const LINKEDIN_URL = 'https://linkedin.com/in/davidhevesi'
+export const LINKEDIN_URL = 'https://www.linkedin.com/in/dhevesi/'
 
 /** Public profiles used for Person `sameAs`. Keep only real ones. */
 export const SOCIAL_LINKS = [LINKEDIN_URL]
