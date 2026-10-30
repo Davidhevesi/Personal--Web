@@ -21,10 +21,8 @@ export const CONTACT_EMAIL = 'davidhevesi@protonmail.com'
 
 export const LINKEDIN_URL = 'https://linkedin.com/in/davidhevesi'
 
-export const GITHUB_URL = 'https://github.com/Davidhevesi'
-
 /** Public profiles used for Person `sameAs`. Keep only real ones. */
-export const SOCIAL_LINKS = [LINKEDIN_URL, GITHUB_URL]
+export const SOCIAL_LINKS = [LINKEDIN_URL]
 
 export const TWITTER_HANDLE = '' // e.g. '@davidhevesi' once it exists
 

@@ -7,8 +7,7 @@ import styles from './SiteNav.module.css'
 
 const NAV_LINKS = [
   { label: 'Case studies', href: '/#case-studies' },
-  { label: 'Tools', href: '/#tools' },
-  { label: 'About', href: '/#about' },
+  { label: 'Contact', href: '/#contact' },
   { label: 'LinkedIn', href: LINKEDIN_URL },
 ]
 

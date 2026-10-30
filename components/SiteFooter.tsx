@@ -1,11 +1,10 @@
 import Link from 'next/link'
-import { SITE_NAME, SITE_TAGLINE, CONTACT_EMAIL, LINKEDIN_URL, GITHUB_URL } from '@/lib/seo'
+import { SITE_NAME, SITE_TAGLINE, CONTACT_EMAIL, LINKEDIN_URL } from '@/lib/seo'
 import styles from './SiteFooter.module.css'
 
 const FOOTER_LINKS = [
   { label: 'Case studies', href: '/#case-studies' },
   { label: 'LinkedIn', href: LINKEDIN_URL },
-  { label: 'GitHub', href: GITHUB_URL },
   { label: 'Email', href: `mailto:${CONTACT_EMAIL}` },
 ]
 
